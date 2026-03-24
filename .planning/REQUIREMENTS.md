@@ -87,40 +87,40 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| RSTC-01 | TBD | Pending |
-| RSTC-02 | TBD | Pending |
-| RSTC-03 | TBD | Pending |
-| PROF-01 | TBD | Pending |
-| PROF-02 | TBD | Pending |
-| PROF-03 | TBD | Pending |
-| PROF-04 | TBD | Pending |
-| PROF-05 | TBD | Pending |
-| PROF-06 | TBD | Pending |
-| FOOD-01 | TBD | Pending |
-| FOOD-02 | TBD | Pending |
-| FOOD-03 | TBD | Pending |
-| FOOD-04 | TBD | Pending |
-| FOOD-05 | TBD | Pending |
-| FOOD-06 | TBD | Pending |
-| FOOD-07 | TBD | Pending |
-| DASH-01 | TBD | Pending |
-| DASH-02 | TBD | Pending |
-| DASH-03 | TBD | Pending |
-| QUAL-01 | TBD | Pending |
-| QUAL-02 | TBD | Pending |
-| QUAL-03 | TBD | Pending |
-| QUAL-04 | TBD | Pending |
-| QUAL-05 | TBD | Pending |
-| QUAL-06 | TBD | Pending |
-| QUAL-07 | TBD | Pending |
-| DEPL-01 | TBD | Pending |
-| DEPL-02 | TBD | Pending |
+| RSTC-01 | Phase 1 | Pending |
+| RSTC-02 | Phase 1 | Pending |
+| RSTC-03 | Phase 1 | Pending |
+| PROF-01 | Phase 1 | Pending |
+| PROF-02 | Phase 1 | Pending |
+| PROF-03 | Phase 1 | Pending |
+| PROF-04 | Phase 1 | Pending |
+| PROF-05 | Phase 1 | Pending |
+| PROF-06 | Phase 1 | Pending |
+| FOOD-01 | Phase 2 | Pending |
+| FOOD-02 | Phase 2 | Pending |
+| FOOD-03 | Phase 2 | Pending |
+| FOOD-04 | Phase 2 | Pending |
+| FOOD-05 | Phase 2 | Pending |
+| FOOD-06 | Phase 4 | Pending |
+| FOOD-07 | Phase 2 | Pending |
+| DASH-01 | Phase 2 | Pending |
+| DASH-02 | Phase 2 | Pending |
+| DASH-03 | Phase 2 | Pending |
+| QUAL-01 | Phase 3 | Pending |
+| QUAL-02 | Phase 3 | Pending |
+| QUAL-03 | Phase 3 | Pending |
+| QUAL-04 | Phase 3 | Pending |
+| QUAL-05 | Phase 3 | Pending |
+| QUAL-06 | Phase 3 | Pending |
+| QUAL-07 | Phase 3 | Pending |
+| DEPL-01 | Phase 4 | Pending |
+| DEPL-02 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 28 total
-- Mapped to phases: 0
-- Unmapped: 28 ⚠️
+- Mapped to phases: 28
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-24*
-*Last updated: 2026-03-24 after initial definition*
+*Last updated: 2026-03-24 after roadmap creation — traceability complete*
