@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Willkommen{% endblock %}
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4 fw-bold text-success">NutriTrack</h1>
+    <p class="lead">Dein Buddy für Gewichtsverlust und Muskelaufbau</p>
+    <p class="text-muted">Tracke deine Mahlzeiten, behalte dein Gewicht im Blick und erreiche deine Ziele.</p>
+    <div class="mt-4">
+        <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-lg me-2">Jetzt starten</a>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-success btn-lg">Anmelden</a>
+    </div>
+</div>
+
+<div class="row text-center mt-5">
+    <div class="col-md-4">
+        <h3>Mahlzeiten tracken</h3>
+        <p>Erfasse Kalorien, Protein, Kohlenhydrate und Fett für jede Mahlzeit.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>Gewicht verfolgen</h3>
+        <p>Logge dein Gewicht regelmäßig und sieh deinen Fortschritt.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>Ziele setzen</h3>
+        <p>Definiere dein Zielgewicht und tägliches Kalorienziel.</p>
+    </div>
+</div>
+{% endblock %}
