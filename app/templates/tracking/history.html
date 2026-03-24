@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Verlauf{% endblock %}
+{% block content %}
+<h2>Verlauf</h2>
+
+<ul class="nav nav-tabs mb-3" id="historyTabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#meals">Mahlzeiten</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#weight">Gewicht</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="meals">
+        {% if meals %}
+        <table class="table table-striped">
+            <thead>
+                <tr><th>Datum</th><th>Mahlzeit</th><th>Typ</th><th>kcal</th><th>P</th><th>KH</th><th>F</th></tr>
+            </thead>
+            <tbody>
+                {% for meal in meals %}
+                <tr>
+                    <td>{{ meal.logged_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ meal.name }}</td>
+                    <td>{{ meal.meal_type }}</td>
+                    <td>{{ meal.calories }}</td>
+                    <td>{{ meal.protein_g }}g</td>
+                    <td>{{ meal.carbs_g }}g</td>
+                    <td>{{ meal.fat_g }}g</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">Noch keine Mahlzeiten erfasst.</p>
+        {% endif %}
+    </div>
+    <div class="tab-pane fade" id="weight">
+        {% if weights %}
+        <table class="table table-striped">
+            <thead><tr><th>Datum</th><th>Gewicht</th></tr></thead>
+            <tbody>
+                {% for w in weights %}
+                <tr>
+                    <td>{{ w.logged_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ w.weight_kg }} kg</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">Noch keine Gewichtsdaten erfasst.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
