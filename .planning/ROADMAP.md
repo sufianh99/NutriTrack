@@ -12,7 +12,7 @@
 - [x] **Phase 1: Foundation** - Remove auth, rewrite models, implement calculator, onboarding form (completed 2026-03-25)
 - [x] **Phase 2: Tracking Loop** - Food entry CRUD, portion scaling, dashboard with Soll/Ist comparison (completed 2026-03-25)
 - [x] **Phase 3: Quality Gates** - CI pipeline, test suite, diagrams, health endpoint, logging (completed 2026-03-25)
-- [ ] **Phase 4: API Integration & Deployment** - Open Food Facts search, deployment, README
+- [x] **Phase 4: API Integration & Deployment** - Open Food Facts search, deployment, README (completed 2026-03-25)
 
 ---
 
@@ -80,10 +80,10 @@ Plans:
   1. User can type a food name in the food entry form and select from Open Food Facts search results, which auto-populate the nutrition fields
   2. The app can be deployed to Render, Railway, or PythonAnywhere from the repository with no manual configuration beyond environment variables
   3. The README contains setup instructions, an architecture overview, and a usage guide sufficient for a grader to run the app locally
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 04-01-PLAN.md — Open Food Facts API integration (api_client, search route, form autofill)
+- [x] 04-01-PLAN.md — Open Food Facts API integration (api_client, search route, form autofill)
 - [x] 04-02-PLAN.md — Deployment configuration (Procfile, wsgi, gunicorn) and README documentation
 
 ---
@@ -95,7 +95,7 @@ Plans:
 | 1. Foundation | 3/3 | Complete   | 2026-03-25 |
 | 2. Tracking Loop | 3/3 | Complete   | 2026-03-25 |
 | 3. Quality Gates | 3/3 | Complete   | 2026-03-25 |
-| 4. API Integration & Deployment | 1/2 | In Progress|  |
+| 4. API Integration & Deployment | 2/2 | Complete   | 2026-03-25 |
 
 ---
 
