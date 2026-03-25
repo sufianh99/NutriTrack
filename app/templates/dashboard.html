@@ -1,39 +1,121 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<h2 class="mb-4">Dashboard</h2>
 
+{# === Date Navigation (FOOD-07) === #}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <a href="{{ url_for('main.dashboard', date=prev_date) }}"
+     class="btn btn-outline-secondary btn-sm">&laquo; Vorheriger Tag</a>
+  <h4 class="mb-0">
+    {% if display_date == today %}Heute{% else %}{{ display_date.strftime('%d.%m.%Y') }}{% endif %}
+  </h4>
+  <a href="{{ url_for('main.dashboard', date=next_date) }}"
+     class="btn btn-outline-secondary btn-sm {% if display_date >= today %}disabled{% endif %}">
+    Naechster Tag &raquo;
+  </a>
+</div>
+
+{# === Soll/Ist Progress Bars (DASH-01, DASH-02) === #}
 {% if goal %}
-<div class="row mt-3">
-  <div class="col-md-3 mb-3">
-    <div class="card text-bg-success">
-      <div class="card-body text-center">
-        <h5 class="card-title">Kalorienziel</h5>
-        <p class="display-6">{{ "%.0f"|format(goal.calorie_goal) }} kcal</p>
+<div class="card mb-4">
+  <div class="card-header"><strong>Tagesfortschritt</strong></div>
+  <div class="card-body">
+
+    {# Calories #}
+    {% set pct_cal = percentages.get('calories', 0) %}
+    {% set st_cal = statuses.get('calories', '') %}
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <span>Kalorien</span>
+        <span>{{ totals.calories }} / {{ "%.0f"|format(goal.calorie_goal) }} kcal ({{ pct_cal }}%)</span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar {% if st_cal %}bg-{{ st_cal }}{% endif %}"
+             role="progressbar"
+             style="width: {{ [pct_cal, 100] | min }}%"
+             aria-valuenow="{{ pct_cal }}"
+             aria-valuemin="0" aria-valuemax="100"></div>
       </div>
     </div>
-  </div>
-  <div class="col-md-3 mb-3">
-    <div class="card border-success">
-      <div class="card-body text-center">
-        <h5 class="card-title">Protein</h5>
-        <p class="display-6">{{ "%.1f"|format(goal.protein_goal) }} g</p>
+
+    {# Protein #}
+    {% set pct_prot = percentages.get('protein', 0) %}
+    {% set st_prot = statuses.get('protein', '') %}
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <span>Protein</span>
+        <span>{{ totals.protein_g }} / {{ "%.1f"|format(goal.protein_goal) }} g ({{ pct_prot }}%)</span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar {% if st_prot %}bg-{{ st_prot }}{% endif %}"
+             role="progressbar"
+             style="width: {{ [pct_prot, 100] | min }}%"
+             aria-valuenow="{{ pct_prot }}"
+             aria-valuemin="0" aria-valuemax="100"></div>
       </div>
     </div>
-  </div>
-  <div class="col-md-3 mb-3">
-    <div class="card border-success">
-      <div class="card-body text-center">
-        <h5 class="card-title">Fett</h5>
-        <p class="display-6">{{ "%.1f"|format(goal.fat_goal) }} g</p>
+
+    {# Fat #}
+    {% set pct_fat = percentages.get('fat', 0) %}
+    {% set st_fat = statuses.get('fat', '') %}
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <span>Fett</span>
+        <span>{{ totals.fat_g }} / {{ "%.1f"|format(goal.fat_goal) }} g ({{ pct_fat }}%)</span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar {% if st_fat %}bg-{{ st_fat }}{% endif %}"
+             role="progressbar"
+             style="width: {{ [pct_fat, 100] | min }}%"
+             aria-valuenow="{{ pct_fat }}"
+             aria-valuemin="0" aria-valuemax="100"></div>
       </div>
     </div>
+
+    {# Carbs #}
+    {% set pct_carb = percentages.get('carbs', 0) %}
+    {% set st_carb = statuses.get('carbs', '') %}
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <span>Kohlenhydrate</span>
+        <span>{{ totals.carbs_g }} / {{ "%.1f"|format(goal.carb_goal) }} g ({{ pct_carb }}%)</span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar {% if st_carb %}bg-{{ st_carb }}{% endif %}"
+             role="progressbar"
+             style="width: {{ [pct_carb, 100] | min }}%"
+             aria-valuenow="{{ pct_carb }}"
+             aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+
   </div>
-  <div class="col-md-3 mb-3">
-    <div class="card border-success">
-      <div class="card-body text-center">
-        <h5 class="card-title">Kohlenhydrate</h5>
-        <p class="display-6">{{ "%.1f"|format(goal.carb_goal) }} g</p>
+</div>
+
+{# === Daily Summary (DASH-03) === #}
+<div class="card mb-4">
+  <div class="card-header"><strong>Tageszusammenfassung</strong></div>
+  <div class="card-body">
+    <div class="row text-center">
+      <div class="col-md-3">
+        <h5>{{ totals.calories }} kcal</h5>
+        <small class="text-muted">Gegessen</small>
+      </div>
+      <div class="col-md-3">
+        <h5>{{ remaining.get('calories', 0) }} kcal</h5>
+        <small class="text-muted">Verbleibend</small>
+      </div>
+      <div class="col-md-2">
+        <h5>{{ pct_prot }}%</h5>
+        <small class="text-muted">Protein</small>
+      </div>
+      <div class="col-md-2">
+        <h5>{{ pct_fat }}%</h5>
+        <small class="text-muted">Fett</small>
+      </div>
+      <div class="col-md-2">
+        <h5>{{ pct_carb }}%</h5>
+        <small class="text-muted">Kohlenhydrate</small>
       </div>
     </div>
   </div>
@@ -44,5 +126,63 @@
 </div>
 {% endif %}
 
-<a href="{{ url_for('main.profile') }}" class="btn btn-outline-success mt-3">Profil bearbeiten</a>
+{# === Food Log (inline list of entries) === #}
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <strong>Eintraege</strong>
+    {% if display_date == today %}
+    <a href="{{ url_for('main.add_food') }}" class="btn btn-success btn-sm">+ Lebensmittel</a>
+    {% endif %}
+  </div>
+  <div class="card-body">
+    {% if entry_rows %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Menge</th>
+            <th>Kalorien</th>
+            <th>Protein</th>
+            <th>Fett</th>
+            <th>KH</th>
+            {% if display_date == today %}
+            <th>Aktionen</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in entry_rows %}
+          <tr>
+            <td>{{ row.entry.name }}</td>
+            <td>{{ row.entry.amount_g }} g</td>
+            <td>{{ row.scaled.calories }} kcal</td>
+            <td>{{ row.scaled.protein_g }} g</td>
+            <td>{{ row.scaled.fat_g }} g</td>
+            <td>{{ row.scaled.carbs_g }} g</td>
+            {% if display_date == today %}
+            <td>
+              <a href="{{ url_for('main.edit_food', entry_id=row.entry.id) }}"
+                 class="btn btn-sm btn-outline-primary">Bearbeiten</a>
+              <form method="POST"
+                    action="{{ url_for('main.delete_food', entry_id=row.entry.id) }}"
+                    class="d-inline">
+                {{ delete_form.hidden_tag() }}
+                <button type="submit" class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Eintrag loeschen?')">Loeschen</button>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted mb-0">Noch keine Eintraege fuer diesen Tag.</p>
+    {% endif %}
+  </div>
+</div>
+
+<a href="{{ url_for('main.profile') }}" class="btn btn-outline-success">Profil bearbeiten</a>
 {% endblock %}
