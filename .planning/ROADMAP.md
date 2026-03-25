@@ -80,7 +80,11 @@ Plans:
   1. User can type a food name in the food entry form and select from Open Food Facts search results, which auto-populate the nutrition fields
   2. The app can be deployed to Render, Railway, or PythonAnywhere from the repository with no manual configuration beyond environment variables
   3. The README contains setup instructions, an architecture overview, and a usage guide sufficient for a grader to run the app locally
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Open Food Facts API integration (api_client, search route, form autofill)
+- [ ] 04-02-PLAN.md — Deployment configuration (Procfile, wsgi, gunicorn) and README documentation
 
 ---
 
@@ -91,9 +95,9 @@ Plans:
 | 1. Foundation | 3/3 | Complete   | 2026-03-25 |
 | 2. Tracking Loop | 3/3 | Complete   | 2026-03-25 |
 | 3. Quality Gates | 3/3 | Complete   | 2026-03-25 |
-| 4. API Integration & Deployment | 0/? | Not started | - |
+| 4. API Integration & Deployment | 0/2 | Planning complete | - |
 
 ---
 
 *Roadmap created: 2026-03-24*
-*Last updated: 2026-03-25 after Phase 3 planning*
+*Last updated: 2026-03-25 after Phase 4 planning*
