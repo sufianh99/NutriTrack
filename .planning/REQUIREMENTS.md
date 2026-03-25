@@ -45,8 +45,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **QUAL-03**: GitHub Actions CI pipeline runs Black, Ruff, Mypy, and pytest on push/PR
 - [ ] **QUAL-04**: Klassendiagramm of the application models
 - [ ] **QUAL-05**: Sequenzdiagramm of the CI/CD pipeline
-- [ ] **QUAL-06**: Python logging module integrated across app modules
-- [ ] **QUAL-07**: /health endpoint returns {"status": "ok"} with HTTP 200
+- [x] **QUAL-06**: Python logging module integrated across app modules
+- [x] **QUAL-07**: /health endpoint returns {"status": "ok"} with HTTP 200
 
 ### Deployment
 
@@ -111,8 +111,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUAL-03 | Phase 3 | Pending |
 | QUAL-04 | Phase 3 | Pending |
 | QUAL-05 | Phase 3 | Pending |
-| QUAL-06 | Phase 3 | Pending |
-| QUAL-07 | Phase 3 | Pending |
+| QUAL-06 | Phase 3 | Complete |
+| QUAL-07 | Phase 3 | Complete |
 | DEPL-01 | Phase 4 | Pending |
 | DEPL-02 | Phase 4 | Pending |
 

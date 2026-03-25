@@ -68,7 +68,7 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Logging configuration and /health endpoint
+- [x] 03-01-PLAN.md — Logging configuration and /health endpoint
 - [x] 03-02-PLAN.md — Unit test audit and integration tests
 - [ ] 03-03-PLAN.md — GitHub Actions CI pipeline and diagrams (Klassen + Sequenz)
 
