@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant Dev as Developer
+    participant GH as GitHub
+    participant Runner as ubuntu-latest Runner
+    participant Black
+    participant Ruff
+    participant Mypy
+    participant Pytest
+
+    Dev->>GH: git push / Pull Request
+    GH->>Runner: Trigger CI workflow
+    Runner->>Runner: Checkout code
+    Runner->>Runner: Setup Python 3.12
+    Runner->>Runner: pip install -r requirements-dev.txt
+    Runner->>Black: black --check .
+    Black-->>Runner: Format OK / Fail
+    Runner->>Ruff: ruff check .
+    Ruff-->>Runner: Lint OK / Fail
+    Runner->>Mypy: mypy app/
+    Mypy-->>Runner: Types OK / Fail
+    Runner->>Pytest: pytest tests/ -v
+    Pytest-->>Runner: Tests OK / Fail
+    Runner-->>GH: Report status (pass/fail)
+    GH-->>Dev: Status badge + check result

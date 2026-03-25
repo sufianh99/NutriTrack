@@ -1,0 +1,49 @@
+classDiagram
+    class UserProfile {
+        +int id
+        +int age
+        +float height_cm
+        +float weight_kg
+        +str gender
+        +str activity_level
+        +str goal
+    }
+
+    class DailyGoal {
+        +int id
+        +date date
+        +float calorie_goal
+        +float protein_goal
+        +float fat_goal
+        +float carb_goal
+    }
+
+    class FoodEntry {
+        +int id
+        +date date
+        +str name
+        +float amount_g
+        +float calories_per_100g
+        +float protein_per_100g
+        +float fat_per_100g
+        +float carbs_per_100g
+    }
+
+    class Calculator {
+        +calculate_bmr(weight_kg, height_cm, age, gender) float
+        +calculate_tdee(bmr, activity_level) float
+        +apply_goal_modifier(tdee, goal) float
+        +calculate_macros(calorie_goal) dict
+    }
+
+    class Nutrition {
+        +scale_nutrients(amount_g, cal, prot, fat, carbs) dict
+        +sum_daily_nutrients(entries) dict
+        +progress_status(actual, goal) str
+    }
+
+    UserProfile --> DailyGoal : profile save triggers goal calculation
+    UserProfile --> Calculator : provides input for BMR/TDEE
+    Calculator --> DailyGoal : produces calorie and macro goals
+    FoodEntry --> Nutrition : entries scaled and summed
+    DailyGoal --> Nutrition : goal values for progress comparison
