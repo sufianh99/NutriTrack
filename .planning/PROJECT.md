@@ -14,14 +14,13 @@ Nutzer können ihren individuellen Tagesbedarf berechnen und ihre tatsächliche 
 
 - ✓ Flask-App-Struktur mit SQLAlchemy und SQLite — existing
 - ✓ Grundlegende Templates mit Bootstrap 5 — existing
+- ✓ Nutzerprofil anlegen (Alter, Größe, Gewicht, Geschlecht, Aktivitätslevel, Ziel) — Phase 1
+- ✓ Grundumsatz berechnen (Mifflin-St-Jeor-Formel) — Phase 1
+- ✓ Gesamtumsatz mit Aktivitätsfaktor berechnen — Phase 1
+- ✓ Kalorienziel aus Ziel ableiten (abnehmen/halten/zunehmen) — Phase 1
+- ✓ Makroverteilung berechnen (Protein 25%, Fett 30%, KH 45%) — Phase 1
 
 ### Active
-
-- [ ] Nutzerprofil anlegen (Alter, Größe, Gewicht, Geschlecht, Aktivitätslevel, Ziel)
-- [ ] Grundumsatz berechnen (Mifflin-St-Jeor-Formel)
-- [ ] Gesamtumsatz mit Aktivitätsfaktor berechnen
-- [ ] Kalorienziel aus Ziel ableiten (abnehmen/halten/zunehmen)
-- [ ] Makroverteilung berechnen (Protein 25%, Fett 30%, KH 45%)
 - [ ] Lebensmittel manuell hinzufügen (Name, Menge, Nährwerte)
 - [ ] Nährwerte auf Portionsgröße umrechnen
 - [ ] Tägliche Nährwerte aufaddieren
@@ -86,4 +85,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-24 after initialization*
+*Last updated: 2026-03-25 after Phase 1 completion — auth removed, models rewritten, calculator + onboarding working*
