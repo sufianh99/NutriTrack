@@ -75,7 +75,7 @@ The worktree branch required a `git reset --hard main` before starting because t
 
 None. This plan creates static artefact files (CI config, diagrams) — no data stubs possible.
 
-## Self-Check
+## Self-Check: PASSED
 
 Files created:
 - `.github/workflows/ci.yml` — FOUND
@@ -83,6 +83,8 @@ Files created:
 - `docs/klassendiagramm.mmd` — FOUND
 - `docs/sequenzdiagramm-ci.mmd` — FOUND
 
-Commits:
+Commits (worktree branch, cherry-picked to main as 8c37063):
 - `310c317` — chore(03-03): add requirements-dev.txt and GitHub Actions CI pipeline
 - `6ebb473` — docs(03-03): add Klassendiagramm and Sequenzdiagramm as Mermaid files
+- `9535422` — docs(03-03): planning metadata (SUMMARY, STATE, ROADMAP, REQUIREMENTS)
+- `8c37063` — chore(03-03): merged task files to main branch
