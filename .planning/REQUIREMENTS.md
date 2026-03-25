@@ -40,8 +40,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Quality Assurance
 
-- [ ] **QUAL-01**: Minimum 5 unit tests for calculation logic (BMR, TDEE, calorie goal, macros, portion scaling)
-- [ ] **QUAL-02**: Integration tests for profile save, food entry add, dashboard response
+- [x] **QUAL-01**: Minimum 5 unit tests for calculation logic (BMR, TDEE, calorie goal, macros, portion scaling)
+- [x] **QUAL-02**: Integration tests for profile save, food entry add, dashboard response
 - [ ] **QUAL-03**: GitHub Actions CI pipeline runs Black, Ruff, Mypy, and pytest on push/PR
 - [ ] **QUAL-04**: Klassendiagramm of the application models
 - [ ] **QUAL-05**: Sequenzdiagramm of the CI/CD pipeline
@@ -106,8 +106,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DASH-01 | Phase 2 | Complete |
 | DASH-02 | Phase 2 | Complete |
 | DASH-03 | Phase 2 | Complete |
-| QUAL-01 | Phase 3 | Pending |
-| QUAL-02 | Phase 3 | Pending |
+| QUAL-01 | Phase 3 | Complete |
+| QUAL-02 | Phase 3 | Complete |
 | QUAL-03 | Phase 3 | Pending |
 | QUAL-04 | Phase 3 | Pending |
 | QUAL-05 | Phase 3 | Pending |
