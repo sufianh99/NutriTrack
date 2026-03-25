@@ -10,7 +10,7 @@ from app.calculator import (
     calculate_macros,
     calculate_tdee,
 )
-from app.forms import DeleteForm, OnboardingForm
+from app.forms import DeleteForm, FoodEntryForm, OnboardingForm
 from app.models import DailyGoal, FoodEntry, UserProfile
 from app.nutrition import progress_status, scale_nutrients, sum_daily_nutrients
 
@@ -187,3 +187,54 @@ def dashboard():
         next_date=next_date,
         delete_form=delete_form,
     )
+
+
+@bp.route("/food/add", methods=["GET", "POST"])
+def add_food():
+    profile = _get_profile()
+    if profile is None:
+        return redirect(url_for("main.onboarding"))
+    form = FoodEntryForm()
+    if form.validate_on_submit():
+        entry = FoodEntry(
+            date=date.today(),
+            name=form.name.data,
+            amount_g=form.amount_g.data,
+            calories_per_100g=form.calories_per_100g.data,
+            protein_per_100g=form.protein_per_100g.data,
+            fat_per_100g=form.fat_per_100g.data,
+            carbs_per_100g=form.carbs_per_100g.data,
+        )
+        db.session.add(entry)
+        db.session.commit()
+        flash("Lebensmittel hinzugefuegt.", "success")
+        return redirect(url_for("main.dashboard"))
+    return render_template("food_form.html", form=form, edit=False)
+
+
+@bp.route("/food/<int:entry_id>/edit", methods=["GET", "POST"])
+def edit_food(entry_id: int):
+    profile = _get_profile()
+    if profile is None:
+        return redirect(url_for("main.onboarding"))
+    entry = db.session.get(FoodEntry, entry_id)
+    if entry is None:
+        flash("Eintrag nicht gefunden.", "warning")
+        return redirect(url_for("main.dashboard"))
+    form = FoodEntryForm(obj=entry)
+    if form.validate_on_submit():
+        form.populate_obj(entry)
+        db.session.commit()
+        flash("Eintrag aktualisiert.", "success")
+        return redirect(url_for("main.dashboard"))
+    return render_template("food_form.html", form=form, edit=True, entry=entry)
+
+
+@bp.route("/food/<int:entry_id>/delete", methods=["POST"])
+def delete_food(entry_id: int):
+    entry = db.session.get(FoodEntry, entry_id)
+    if entry is not None:
+        db.session.delete(entry)
+        db.session.commit()
+        flash("Eintrag geloescht.", "success")
+    return redirect(url_for("main.dashboard"))
