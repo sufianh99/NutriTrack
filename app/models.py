@@ -1,56 +1,39 @@
-from datetime import datetime, timezone
+from datetime import date
 
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import Date, Float, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
 
-from app import db, login_manager
-
-
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True, nullable=False, index=True)
-    email = db.Column(db.String(120), unique=True, nullable=False, index=True)
-    password_hash = db.Column(db.String(256), nullable=False)
-    height_cm = db.Column(db.Float, nullable=True)
-    target_weight_kg = db.Column(db.Float, nullable=True)
-    daily_calorie_goal = db.Column(db.Integer, default=2000)
-    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-
-    meals = db.relationship("Meal", backref="user", lazy="dynamic")
-    weight_logs = db.relationship("WeightLog", backref="user", lazy="dynamic")
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+from app import db
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return db.session.get(User, int(user_id))
+class UserProfile(db.Model):
+    __tablename__ = "user_profile"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    age: Mapped[int] = mapped_column(Integer, nullable=False)
+    height_cm: Mapped[float] = mapped_column(Float, nullable=False)
+    weight_kg: Mapped[float] = mapped_column(Float, nullable=False)
+    gender: Mapped[str] = mapped_column(String(10), nullable=False)
+    activity_level: Mapped[str] = mapped_column(String(20), nullable=False)
+    goal: Mapped[str] = mapped_column(String(20), nullable=False)
 
 
-class Meal(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    name = db.Column(db.String(200), nullable=False)
-    calories = db.Column(db.Integer, nullable=False)
-    protein_g = db.Column(db.Float, default=0)
-    carbs_g = db.Column(db.Float, default=0)
-    fat_g = db.Column(db.Float, default=0)
-    meal_type = db.Column(db.String(20), default="snack")  # breakfast, lunch, dinner, snack
-    logged_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-
-    def __repr__(self):
-        return f"<Meal {self.name} ({self.calories} kcal)>"
+class DailyGoal(db.Model):
+    __tablename__ = "daily_goal"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    date: Mapped[date] = mapped_column(Date, nullable=False, unique=True)
+    calorie_goal: Mapped[float] = mapped_column(Float, nullable=False)
+    protein_goal: Mapped[float] = mapped_column(Float, nullable=False)
+    fat_goal: Mapped[float] = mapped_column(Float, nullable=False)
+    carb_goal: Mapped[float] = mapped_column(Float, nullable=False)
 
 
-class WeightLog(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    weight_kg = db.Column(db.Float, nullable=False)
-    logged_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-
-    def __repr__(self):
-        return f"<WeightLog {self.weight_kg} kg>"
+class FoodEntry(db.Model):
+    __tablename__ = "food_entry"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    date: Mapped[date] = mapped_column(Date, nullable=False)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    amount_g: Mapped[float] = mapped_column(Float, nullable=False)
+    calories_per_100g: Mapped[float] = mapped_column(Float, nullable=False)
+    protein_per_100g: Mapped[float] = mapped_column(Float, nullable=False)
+    fat_per_100g: Mapped[float] = mapped_column(Float, nullable=False)
+    carbs_per_100g: Mapped[float] = mapped_column(Float, nullable=False)

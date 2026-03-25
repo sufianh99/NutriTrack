@@ -16,16 +16,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navContent">
                 <ul class="navbar-nav ms-auto">
-                    {% if current_user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('tracking.add_meal') }}">+ Mahlzeit</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('tracking.add_weight') }}">+ Gewicht</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('tracking.history') }}">Verlauf</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('tracking.profile') }}">Profil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Abmelden</a></li>
-                    {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Anmelden</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Registrieren</a></li>
-                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.onboarding') }}">Profil</a></li>
                 </ul>
             </div>
         </div>
