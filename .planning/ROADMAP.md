@@ -27,11 +27,11 @@
   2. User is redirected to onboarding on first run and can submit age, height, weight, gender, activity level, and goal
   3. After submitting the onboarding form, user can view their calculated daily calorie goal and macro targets (protein/fat/carbs in grams)
   4. A 30-year-old, 70 kg, 175 cm male with sedentary activity and maintain goal produces BMR = 1648.75 kcal and calorie goal = 1978.50 kcal (BMR via Mifflin-St-Jeor: 10*70 + 6.25*175 - 5*30 + 5 = 1648.75; TDEE = 1648.75 * 1.2 = 1978.50; maintain modifier = 1.0)
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 - [ ] 01-01-PLAN.md — Auth removal, model rewrite, forms, dependencies, pyproject.toml
-- [ ] 01-02-PLAN.md — Calculator module (BMR/TDEE/macros) with TDD unit tests
+- [x] 01-02-PLAN.md — Calculator module (BMR/TDEE/macros) with TDD unit tests
 - [ ] 01-03-PLAN.md — Onboarding/profile routes, templates, dashboard display
 
 **UI hint**: yes
@@ -77,7 +77,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/3 | Planning complete | - |
+| 1. Foundation | 1/3 | In Progress|  |
 | 2. Tracking Loop | 0/? | Not started | - |
 | 3. Quality Gates | 0/? | Not started | - |
 | 4. API Integration & Deployment | 0/? | Not started | - |

@@ -16,10 +16,10 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Profile & Calculation
 
 - [ ] **PROF-01**: User can enter body data via onboarding form (age, height_cm, weight_kg, gender, activity_level, goal)
-- [ ] **PROF-02**: App calculates BMR using Mifflin-St-Jeor formula (male: 10×weight + 6.25×height - 5×age + 5, female: ... - 161)
-- [ ] **PROF-03**: App calculates TDEE by multiplying BMR with PAL factor (1.2 / 1.375 / 1.55 / 1.725 / 1.9)
-- [ ] **PROF-04**: App derives calorie goal from TDEE and user goal (lose: ×0.85, maintain: ×1.0, gain: ×1.10)
-- [ ] **PROF-05**: App calculates macro goals (protein 25% ÷4, fat 30% ÷9, carbs 45% ÷4)
+- [x] **PROF-02**: App calculates BMR using Mifflin-St-Jeor formula (male: 10×weight + 6.25×height - 5×age + 5, female: ... - 161)
+- [x] **PROF-03**: App calculates TDEE by multiplying BMR with PAL factor (1.2 / 1.375 / 1.55 / 1.725 / 1.9)
+- [x] **PROF-04**: App derives calorie goal from TDEE and user goal (lose: ×0.85, maintain: ×1.0, gain: ×1.10)
+- [x] **PROF-05**: App calculates macro goals (protein 25% ÷4, fat 30% ÷9, carbs 45% ÷4)
 - [ ] **PROF-06**: User can view their calculated daily calorie and macro goals
 
 ### Food Tracking
@@ -91,10 +91,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RSTC-02 | Phase 1 | Pending |
 | RSTC-03 | Phase 1 | Pending |
 | PROF-01 | Phase 1 | Pending |
-| PROF-02 | Phase 1 | Pending |
-| PROF-03 | Phase 1 | Pending |
-| PROF-04 | Phase 1 | Pending |
-| PROF-05 | Phase 1 | Pending |
+| PROF-02 | Phase 1 | Complete |
+| PROF-03 | Phase 1 | Complete |
+| PROF-04 | Phase 1 | Complete |
+| PROF-05 | Phase 1 | Complete |
 | PROF-06 | Phase 1 | Pending |
 | FOOD-01 | Phase 2 | Pending |
 | FOOD-02 | Phase 2 | Pending |

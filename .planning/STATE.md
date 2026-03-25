@@ -1,7 +1,20 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: unknown
+last_updated: "2026-03-25T08:09:52.390Z"
+progress:
+  total_phases: 4
+  completed_phases: 0
+  total_plans: 3
+  completed_plans: 1
+---
+
 # Project State: NutriTrack
 
-**Last updated:** 2026-03-24
-**Updated by:** roadmapper (initial creation)
+**Last updated:** 2026-03-25
+**Updated by:** execute-phase agent (01-02 calculator module)
 
 ---
 
@@ -9,27 +22,14 @@
 
 **Core value:** Nutzer können ihren individuellen Tagesbedarf berechnen und ihre tatsächliche Nahrungsaufnahme dagegen tracken — mit sofort sichtbarem Soll/Ist-Vergleich und farblicher Ampel.
 
-**Current focus:** Phase 1 — Foundation (auth removal, model rewrite, calculator, onboarding)
+**Current focus:** Phase 01 — foundation
 
 ---
 
 ## Current Position
 
-**Phase:** 1 - Foundation
-**Plan:** None started
-**Status:** Not started
-
-**Progress:**
-```
-[Phase 1: Foundation       ] [ ] Not started
-[Phase 2: Tracking Loop    ] [ ] Not started
-[Phase 3: Quality Gates    ] [ ] Not started
-[Phase 4: API & Deployment ] [ ] Not started
-```
-
-Overall: 0/4 phases complete
-
----
+Phase: 01 (foundation) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -50,6 +50,8 @@ Overall: 0/4 phases complete
 | SQLite over PostgreSQL | Simplicity, zero-ops, project spec constraint | Phase 1 |
 | FOOD-06 (Open Food Facts) deferred to Phase 4 | API integration requires CI safety net; Phase 3 must be green first | Phase 4 |
 | Pure Python calculator/nutrition modules | Enables unit testing without Flask app context; required for Mypy | Phase 1 |
+| BMR reference value 1648.75 (not 1673.75) | Standard Mifflin-St-Jeor formula output; project spec value is a typo | Phase 1 Plan 2 |
+| Female BMR constant -161 verified by test | Male-female difference test (166 = 5 - (-161)) anchors the constant | Phase 1 Plan 2 |
 
 ### Critical Pitfalls to Watch
 
@@ -82,6 +84,7 @@ None currently.
 **To resume work:** Run `/gsd:plan-phase 1` to begin planning Phase 1.
 
 **Context for next session:**
+
 - Brownfield Flask app — existing auth system (Flask-Login) must be removed before any other work
 - 4-phase roadmap: Foundation → Tracking Loop → Quality Gates → API & Deployment
 - All 28 v1 requirements mapped; no orphans
