@@ -257,3 +257,11 @@ def delete_food(entry_id: int):
         logger.info("Food entry deleted: id=%d", entry_id)
         flash("Eintrag geloescht.", "success")
     return redirect(url_for("main.dashboard"))
+
+
+@bp.route("/health")
+def health():
+    """Health check endpoint for CI/CD and monitoring."""
+    from flask import jsonify
+
+    return jsonify({"status": "ok"})
