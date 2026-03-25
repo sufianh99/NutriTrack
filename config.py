@@ -9,3 +9,10 @@ class Config:
         "DATABASE_URL", f"sqlite:///{os.path.join(basedir, 'instance', 'nutritrack.db')}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+class TestConfig:
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    WTF_CSRF_ENABLED = False
+    SECRET_KEY = "test-secret"
