@@ -1,6 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, IntegerField, SelectField, SubmitField
+from wtforms import FloatField, IntegerField, SelectField, StringField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
+
+
+class DeleteForm(FlaskForm):
+    """Empty form used solely for CSRF token on delete actions."""
+
+    pass
 
 
 class OnboardingForm(FlaskForm):

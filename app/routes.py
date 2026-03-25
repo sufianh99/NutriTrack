@@ -1,6 +1,6 @@
-from datetime import date
+from datetime import date, timedelta
 
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from sqlalchemy import select
 
 from app import db
@@ -10,8 +10,9 @@ from app.calculator import (
     calculate_macros,
     calculate_tdee,
 )
-from app.forms import OnboardingForm
-from app.models import DailyGoal, UserProfile
+from app.forms import DeleteForm, OnboardingForm
+from app.models import DailyGoal, FoodEntry, UserProfile
+from app.nutrition import progress_status, scale_nutrients, sum_daily_nutrients
 
 bp = Blueprint("main", __name__)
 
@@ -89,8 +90,100 @@ def dashboard():
     profile = _get_profile()
     if profile is None:
         return redirect(url_for("main.onboarding"))
+
+    # Resolve display date from ?date= query param or default to today
+    date_str = request.args.get("date")
+    try:
+        display_date = date.fromisoformat(date_str) if date_str else date.today()
+    except ValueError:
+        display_date = date.today()
+
     today = date.today()
+
+    # Always use today's goal for Soll values (goals don't retroactively change)
     goal = db.session.execute(
         select(DailyGoal).where(DailyGoal.date == today)
     ).scalar_one_or_none()
-    return render_template("dashboard.html", profile=profile, goal=goal)
+
+    # Fetch food entries for the displayed date
+    entries = (
+        db.session.execute(
+            select(FoodEntry)
+            .where(FoodEntry.date == display_date)
+            .order_by(FoodEntry.id)
+        )
+        .scalars()
+        .all()
+    )
+
+    # Scale each entry and compute daily totals
+    scaled = [
+        scale_nutrients(
+            e.amount_g,
+            e.calories_per_100g,
+            e.protein_per_100g,
+            e.fat_per_100g,
+            e.carbs_per_100g,
+        )
+        for e in entries
+    ]
+    totals = sum_daily_nutrients(scaled)
+
+    # Build merged entry_rows for template (avoids zip in Jinja2)
+    entry_rows = [{"entry": e, "scaled": s} for e, s in zip(entries, scaled)]
+
+    # Compute progress statuses for colour coding
+    statuses: dict[str, str] = {}
+    if goal:
+        statuses = {
+            "calories": progress_status(totals["calories"], goal.calorie_goal),
+            "protein": progress_status(totals["protein_g"], goal.protein_goal),
+            "fat": progress_status(totals["fat_g"], goal.fat_goal),
+            "carbs": progress_status(totals["carbs_g"], goal.carb_goal),
+        }
+
+    # Compute remaining and percentages for DASH-03
+    remaining: dict[str, float] = {}
+    percentages: dict[str, float] = {}
+    if goal:
+        remaining = {
+            "calories": round(goal.calorie_goal - totals["calories"], 1),
+            "protein_g": round(goal.protein_goal - totals["protein_g"], 1),
+            "fat_g": round(goal.fat_goal - totals["fat_g"], 1),
+            "carbs_g": round(goal.carb_goal - totals["carbs_g"], 1),
+        }
+        percentages = {
+            "calories": round(totals["calories"] / goal.calorie_goal * 100, 1)
+            if goal.calorie_goal > 0
+            else 0.0,
+            "protein": round(totals["protein_g"] / goal.protein_goal * 100, 1)
+            if goal.protein_goal > 0
+            else 0.0,
+            "fat": round(totals["fat_g"] / goal.fat_goal * 100, 1)
+            if goal.fat_goal > 0
+            else 0.0,
+            "carbs": round(totals["carbs_g"] / goal.carb_goal * 100, 1)
+            if goal.carb_goal > 0
+            else 0.0,
+        }
+
+    prev_date = display_date - timedelta(days=1)
+    next_date = display_date + timedelta(days=1)
+
+    delete_form = DeleteForm()
+
+    return render_template(
+        "dashboard.html",
+        profile=profile,
+        goal=goal,
+        entry_rows=entry_rows,
+        totals=totals,
+        statuses=statuses,
+        remaining=remaining,
+        percentages=percentages,
+        display_date=display_date,
+        today=today,
+        prev_date=prev_date,
+        next_date=next_date,
+        delete_form=delete_form,
+    )
