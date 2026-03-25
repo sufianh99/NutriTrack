@@ -46,7 +46,13 @@ Plans:
   3. Dashboard shows today's total calories and macros alongside the goal values (Soll/Ist), with progress bars that turn green at 90-100% and orange/red above 100%
   4. Dashboard daily summary shows remaining calories and macro percentages consumed
   5. User can navigate to a past date and view the food entries and totals for that day
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Nutrition module TDD (portion scaling, summation, progress status)
+- [ ] 02-02-PLAN.md — Food entry CRUD (forms, routes, food_form template)
+- [ ] 02-03-PLAN.md — Dashboard rewrite (Soll/Ist, progress bars, food log, date navigation)
+
 **UI hint**: yes
 
 ### Phase 3: Quality Gates
@@ -78,11 +84,11 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete   | 2026-03-25 |
-| 2. Tracking Loop | 0/? | Not started | - |
+| 2. Tracking Loop | 0/3 | Planned | - |
 | 3. Quality Gates | 0/? | Not started | - |
 | 4. API Integration & Deployment | 0/? | Not started | - |
 
 ---
 
 *Roadmap created: 2026-03-24*
-*Last updated: 2026-03-25 after Phase 1 planning*
+*Last updated: 2026-03-25 after Phase 2 planning*
