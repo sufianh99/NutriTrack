@@ -26,13 +26,15 @@ Nutzer können ihren individuellen Tagesbedarf berechnen und ihre tatsächliche 
 - ✓ Farbliche Fortschrittsanzeige (normal/grün/orange-rot) — Phase 2
 - ✓ Lebensmittel bearbeiten und löschen — Phase 2
 - ✓ Tagesverlauf / Datumsnavigation — Phase 2
+- ✓ Mindestens 5 Unit Tests + Integrationstests (pytest) — Phase 3 (27 tests: 10 calc + 12 nutrition + 5 integration)
+- ✓ GitHub Actions CI-Pipeline (Black, Ruff, Mypy, Tests) — Phase 3
+- ✓ Klassendiagramm — Phase 3 (Mermaid)
+- ✓ Sequenzdiagramm der CI/CD-Pipeline — Phase 3 (Mermaid)
+- ✓ /health Endpoint — Phase 3
+- ✓ Structured Logging — Phase 3
 
 ### Active
 - [ ] Daten in SQLite speichern
-- [ ] Mindestens 5 Unit Tests + Integrationstests (pytest)
-- [ ] GitHub Actions CI-Pipeline (Black, Ruff, Mypy, Tests)
-- [ ] Klassendiagramm
-- [ ] Sequenzdiagramm der CI/CD-Pipeline
 
 ### Out of Scope
 
@@ -87,4 +89,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 after Phase 2 completion — food CRUD, nutrition module, Soll/Ist dashboard with colour-coded progress bars*
+*Last updated: 2026-03-25 after Phase 3 completion — CI pipeline green, 27 tests, diagrams, logging, /health endpoint*
