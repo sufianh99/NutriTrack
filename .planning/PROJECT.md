@@ -19,13 +19,15 @@ Nutzer können ihren individuellen Tagesbedarf berechnen und ihre tatsächliche 
 - ✓ Gesamtumsatz mit Aktivitätsfaktor berechnen — Phase 1
 - ✓ Kalorienziel aus Ziel ableiten (abnehmen/halten/zunehmen) — Phase 1
 - ✓ Makroverteilung berechnen (Protein 25%, Fett 30%, KH 45%) — Phase 1
+- ✓ Lebensmittel manuell hinzufügen (Name, Menge, Nährwerte) — Phase 2
+- ✓ Nährwerte auf Portionsgröße umrechnen — Phase 2
+- ✓ Tägliche Nährwerte aufaddieren — Phase 2
+- ✓ Dashboard mit Soll/Ist-Vergleich — Phase 2
+- ✓ Farbliche Fortschrittsanzeige (normal/grün/orange-rot) — Phase 2
+- ✓ Lebensmittel bearbeiten und löschen — Phase 2
+- ✓ Tagesverlauf / Datumsnavigation — Phase 2
 
 ### Active
-- [ ] Lebensmittel manuell hinzufügen (Name, Menge, Nährwerte)
-- [ ] Nährwerte auf Portionsgröße umrechnen
-- [ ] Tägliche Nährwerte aufaddieren
-- [ ] Dashboard mit Soll/Ist-Vergleich
-- [ ] Farbliche Fortschrittsanzeige (normal/grün/orange-rot)
 - [ ] Daten in SQLite speichern
 - [ ] Mindestens 5 Unit Tests + Integrationstests (pytest)
 - [ ] GitHub Actions CI-Pipeline (Black, Ruff, Mypy, Tests)
@@ -85,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 after Phase 1 completion — auth removed, models rewritten, calculator + onboarding working*
+*Last updated: 2026-03-25 after Phase 2 completion — food CRUD, nutrition module, Soll/Ist dashboard with colour-coded progress bars*
