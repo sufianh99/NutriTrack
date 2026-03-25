@@ -32,9 +32,14 @@ Nutzer können ihren individuellen Tagesbedarf berechnen und ihre tatsächliche 
 - ✓ Sequenzdiagramm der CI/CD-Pipeline — Phase 3 (Mermaid)
 - ✓ /health Endpoint — Phase 3
 - ✓ Structured Logging — Phase 3
+- ✓ Open Food Facts API-Suche mit Autofill — Phase 4
+- ✓ Deployment-Konfiguration (Procfile, wsgi.py, gunicorn) — Phase 4
+- ✓ README mit Setup, Architektur, Usage Guide — Phase 4
+- ✓ Daten in SQLite speichern — validated across all phases
 
 ### Active
-- [ ] Daten in SQLite speichern
+
+(All requirements delivered)
 
 ### Out of Scope
 
@@ -89,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 after Phase 3 completion — CI pipeline green, 27 tests, diagrams, logging, /health endpoint*
+*Last updated: 2026-03-25 after Phase 4 completion — all 4 phases complete, 32 tests, OFF API search, deployment-ready, README documented*
