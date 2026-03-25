@@ -5,6 +5,15 @@
   <div class="col-md-8">
     <h2 class="mb-4">{% if edit %}Eintrag bearbeiten{% else %}Lebensmittel hinzufuegen{% endif %}</h2>
 
+    <div class="mb-4" id="food-search">
+      <label class="form-label">Lebensmittel suchen (Open Food Facts)</label>
+      <div class="input-group">
+        <input type="text" id="search-input" class="form-control" placeholder="z.B. Haferflocken">
+        <button type="button" id="search-btn" class="btn btn-outline-primary">Suchen</button>
+      </div>
+      <div id="search-results" class="list-group mt-2"></div>
+    </div>
+
     <form method="POST"
           action="{% if edit %}{{ url_for('main.edit_food', entry_id=entry.id) }}{% else %}{{ url_for('main.add_food') }}{% endif %}">
       {{ form.hidden_tag() }}
@@ -66,4 +75,59 @@
     </form>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    var searchInput = document.getElementById('search-input');
+    var searchBtn = document.getElementById('search-btn');
+    var resultsDiv = document.getElementById('search-results');
+
+    function doSearch() {
+      var query = searchInput.value.trim();
+      if (query.length < 2) {
+        resultsDiv.innerHTML = '';
+        return;
+      }
+      resultsDiv.innerHTML = '<span class="text-muted ms-1">Suche...</span>';
+      fetch('/api/food-search?q=' + encodeURIComponent(query))
+        .then(function (resp) { return resp.json(); })
+        .then(function (items) {
+          resultsDiv.innerHTML = '';
+          if (!items || items.length === 0) {
+            resultsDiv.innerHTML = '<span class="text-muted ms-1">Keine Ergebnisse gefunden</span>';
+            return;
+          }
+          items.forEach(function (item) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'list-group-item list-group-item-action';
+            btn.textContent = item.name + ' — ' + item.calories_per_100g + ' kcal/100g';
+            btn.addEventListener('click', function () {
+              document.getElementById('name').value = item.name;
+              document.getElementById('calories_per_100g').value = item.calories_per_100g;
+              document.getElementById('protein_per_100g').value = item.protein_per_100g;
+              document.getElementById('fat_per_100g').value = item.fat_per_100g;
+              document.getElementById('carbs_per_100g').value = item.carbs_per_100g;
+              resultsDiv.innerHTML = '';
+              searchInput.value = '';
+            });
+            resultsDiv.appendChild(btn);
+          });
+        })
+        .catch(function () {
+          resultsDiv.innerHTML = '<span class="text-danger ms-1">Suche fehlgeschlagen. Bitte erneut versuchen.</span>';
+        });
+    }
+
+    searchBtn.addEventListener('click', doSearch);
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        doSearch();
+      }
+    });
+  })();
+</script>
 {% endblock %}
