@@ -10,7 +10,9 @@ class DeleteForm(FlaskForm):
 
 
 class OnboardingForm(FlaskForm):
-    age = IntegerField("Alter", validators=[DataRequired(), NumberRange(min=10, max=120)])
+    age = IntegerField(
+        "Alter", validators=[DataRequired(), NumberRange(min=10, max=120)]
+    )
     height_cm = FloatField(
         "Größe (cm)", validators=[DataRequired(), NumberRange(min=100, max=250)]
     )

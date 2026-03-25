@@ -15,6 +15,7 @@ from sqlalchemy import select
 from werkzeug.wrappers import Response as WerkzeugResponse
 
 from app import db
+from app.api_client import search_food
 from app.calculator import (
     apply_goal_modifier,
     calculate_bmr,
@@ -34,6 +35,20 @@ bp = Blueprint("main", __name__)
 def health() -> tuple[Response, int]:
     """Health check endpoint for monitoring and CI verification."""
     return jsonify({"status": "ok"}), 200
+
+
+@bp.route("/api/food-search")
+def food_search() -> tuple[Response, int]:
+    """Search Open Food Facts for foods matching the query string.
+
+    Query param: q (str) — food name to search for.
+    Returns JSON array of product dicts, or empty array if q < 2 chars.
+    """
+    q = request.args.get("q", "")
+    if len(q) < 2:
+        return jsonify([]), 200
+    results = search_food(q)
+    return jsonify(results), 200
 
 
 def _get_profile() -> UserProfile | None:
