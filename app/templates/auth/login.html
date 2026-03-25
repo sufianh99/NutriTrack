@@ -7,9 +7,9 @@
         <form method="POST">
             {{ form.hidden_tag() }}
             <div class="mb-3">
-                {{ form.email.label(class="form-label") }}
-                {{ form.email(class="form-control", placeholder="deine@email.de") }}
-                {% for error in form.email.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control", placeholder="Benutzername") }}
+                {% for error in form.username.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
             </div>
             <div class="mb-3">
                 {{ form.password.label(class="form-label") }}
