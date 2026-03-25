@@ -25,8 +25,8 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Food Tracking
 
 - [ ] **FOOD-01**: User can manually add a food entry (name, amount_g, calories, protein, fat, carbs per 100g)
-- [ ] **FOOD-02**: App scales nutrition values based on portion size (value = per_100g / 100 × amount_g)
-- [ ] **FOOD-03**: App sums all food entries for a given date into daily totals
+- [x] **FOOD-02**: App scales nutrition values based on portion size (value = per_100g / 100 × amount_g)
+- [x] **FOOD-03**: App sums all food entries for a given date into daily totals
 - [ ] **FOOD-04**: User can edit an existing food entry
 - [ ] **FOOD-05**: User can delete an existing food entry
 - [ ] **FOOD-06**: User can search food via Open Food Facts API and auto-fill nutrition values
@@ -35,7 +35,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Dashboard
 
 - [ ] **DASH-01**: Dashboard shows actual vs. goal comparison (Soll/Ist) for calories and all 3 macros
-- [ ] **DASH-02**: Dashboard displays colour-coded progress (neutral <90%, green 90-100%, orange/red >100%)
+- [x] **DASH-02**: Dashboard displays colour-coded progress (neutral <90%, green 90-100%, orange/red >100%)
 - [ ] **DASH-03**: Dashboard shows daily summary (total kcal consumed, remaining, macro percentages)
 
 ### Quality Assurance
@@ -97,14 +97,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROF-05 | Phase 1 | Complete |
 | PROF-06 | Phase 1 | Complete |
 | FOOD-01 | Phase 2 | Pending |
-| FOOD-02 | Phase 2 | Pending |
-| FOOD-03 | Phase 2 | Pending |
+| FOOD-02 | Phase 2 | Complete |
+| FOOD-03 | Phase 2 | Complete |
 | FOOD-04 | Phase 2 | Pending |
 | FOOD-05 | Phase 2 | Pending |
 | FOOD-06 | Phase 4 | Pending |
 | FOOD-07 | Phase 2 | Pending |
 | DASH-01 | Phase 2 | Pending |
-| DASH-02 | Phase 2 | Pending |
+| DASH-02 | Phase 2 | Complete |
 | DASH-03 | Phase 2 | Pending |
 | QUAL-01 | Phase 3 | Pending |
 | QUAL-02 | Phase 3 | Pending |
