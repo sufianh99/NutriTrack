@@ -30,13 +30,13 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **FOOD-04**: User can edit an existing food entry
 - [x] **FOOD-05**: User can delete an existing food entry
 - [ ] **FOOD-06**: User can search food via Open Food Facts API and auto-fill nutrition values
-- [ ] **FOOD-07**: User can view food entries for past dates (history by date)
+- [x] **FOOD-07**: User can view food entries for past dates (history by date)
 
 ### Dashboard
 
-- [ ] **DASH-01**: Dashboard shows actual vs. goal comparison (Soll/Ist) for calories and all 3 macros
+- [x] **DASH-01**: Dashboard shows actual vs. goal comparison (Soll/Ist) for calories and all 3 macros
 - [x] **DASH-02**: Dashboard displays colour-coded progress (neutral <90%, green 90-100%, orange/red >100%)
-- [ ] **DASH-03**: Dashboard shows daily summary (total kcal consumed, remaining, macro percentages)
+- [x] **DASH-03**: Dashboard shows daily summary (total kcal consumed, remaining, macro percentages)
 
 ### Quality Assurance
 
@@ -102,10 +102,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOOD-04 | Phase 2 | Complete |
 | FOOD-05 | Phase 2 | Complete |
 | FOOD-06 | Phase 4 | Pending |
-| FOOD-07 | Phase 2 | Pending |
-| DASH-01 | Phase 2 | Pending |
+| FOOD-07 | Phase 2 | Complete |
+| DASH-01 | Phase 2 | Complete |
 | DASH-02 | Phase 2 | Complete |
-| DASH-03 | Phase 2 | Pending |
+| DASH-03 | Phase 2 | Complete |
 | QUAL-01 | Phase 3 | Pending |
 | QUAL-02 | Phase 3 | Pending |
 | QUAL-03 | Phase 3 | Pending |
