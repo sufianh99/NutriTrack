@@ -3,18 +3,18 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-25T08:09:52.390Z"
+last_updated: "2026-03-25T08:11:38.284Z"
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State: NutriTrack
 
 **Last updated:** 2026-03-25
-**Updated by:** execute-phase agent (01-02 calculator module)
+**Updated by:** execute-phase agent (01-01 foundation cleanup)
 
 ---
 
@@ -29,7 +29,7 @@ progress:
 ## Current Position
 
 Phase: 01 (foundation) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -52,6 +52,8 @@ Plan: 2 of 3
 | Pure Python calculator/nutrition modules | Enables unit testing without Flask app context; required for Mypy | Phase 1 |
 | BMR reference value 1648.75 (not 1673.75) | Standard Mifflin-St-Jeor formula output; project spec value is a typo | Phase 1 Plan 2 |
 | Female BMR constant -161 verified by test | Male-female difference test (166 = 5 - (-161)) anchors the constant | Phase 1 Plan 2 |
+| Single flat app/routes.py replaces app/routes/ directory | Simpler structure for single-user app; single blueprint named 'main' | Phase 1 Plan 1 |
+| SQLAlchemy 2.x Mapped[] typed columns for all models | Mypy compatibility for free; required for disallow_untyped_defs | Phase 1 Plan 1 |
 
 ### Critical Pitfalls to Watch
 
