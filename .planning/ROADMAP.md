@@ -9,7 +9,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Foundation** - Remove auth, rewrite models, implement calculator, onboarding form
+- [x] **Phase 1: Foundation** - Remove auth, rewrite models, implement calculator, onboarding form (completed 2026-03-25)
 - [ ] **Phase 2: Tracking Loop** - Food entry CRUD, portion scaling, dashboard with Soll/Ist comparison
 - [ ] **Phase 3: Quality Gates** - CI pipeline, test suite, diagrams, health endpoint, logging
 - [ ] **Phase 4: API Integration & Deployment** - Open Food Facts search, deployment, README
@@ -27,12 +27,12 @@
   2. User is redirected to onboarding on first run and can submit age, height, weight, gender, activity level, and goal
   3. After submitting the onboarding form, user can view their calculated daily calorie goal and macro targets (protein/fat/carbs in grams)
   4. A 30-year-old, 70 kg, 175 cm male with sedentary activity and maintain goal produces BMR = 1648.75 kcal and calorie goal = 1978.50 kcal (BMR via Mifflin-St-Jeor: 10*70 + 6.25*175 - 5*30 + 5 = 1648.75; TDEE = 1648.75 * 1.2 = 1978.50; maintain modifier = 1.0)
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 01-01-PLAN.md — Auth removal, model rewrite, forms, dependencies, pyproject.toml
 - [x] 01-02-PLAN.md — Calculator module (BMR/TDEE/macros) with TDD unit tests
-- [ ] 01-03-PLAN.md — Onboarding/profile routes, templates, dashboard display
+- [x] 01-03-PLAN.md — Onboarding/profile routes, templates, dashboard display
 
 **UI hint**: yes
 
@@ -77,7 +77,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/3 | In Progress|  |
+| 1. Foundation | 3/3 | Complete   | 2026-03-25 |
 | 2. Tracking Loop | 0/? | Not started | - |
 | 3. Quality Gates | 0/? | Not started | - |
 | 4. API Integration & Deployment | 0/? | Not started | - |
