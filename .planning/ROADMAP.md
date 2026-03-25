@@ -65,7 +65,12 @@ Plans:
   3. A Klassendiagramm of the application models and a Sequenzdiagramm of the CI/CD pipeline exist as committed artefacts
   4. GET /health returns {"status": "ok"} with HTTP 200
   5. Application startup, profile saves, and food entry events are written to application logs via the Python logging module
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Logging configuration and /health endpoint
+- [ ] 03-02-PLAN.md — Unit test audit and integration tests
+- [ ] 03-03-PLAN.md — GitHub Actions CI pipeline and diagrams (Klassen + Sequenz)
 
 ### Phase 4: API Integration & Deployment
 **Goal**: User can search the Open Food Facts database to auto-fill food entries, the app is deployable to a live host, and the project is documented for submission
@@ -85,10 +90,10 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete   | 2026-03-25 |
 | 2. Tracking Loop | 3/3 | Complete   | 2026-03-25 |
-| 3. Quality Gates | 0/? | Not started | - |
+| 3. Quality Gates | 0/3 | Planned | - |
 | 4. API Integration & Deployment | 0/? | Not started | - |
 
 ---
 
 *Roadmap created: 2026-03-24*
-*Last updated: 2026-03-25 after Phase 2 planning*
+*Last updated: 2026-03-25 after Phase 3 planning*
