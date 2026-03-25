@@ -50,8 +50,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Deployment
 
-- [ ] **DEPL-01**: App is deployable to Render / Railway / PythonAnywhere
-- [ ] **DEPL-02**: README with setup instructions, architecture overview, and usage guide
+- [x] **DEPL-01**: App is deployable to Render / Railway / PythonAnywhere
+- [x] **DEPL-02**: README with setup instructions, architecture overview, and usage guide
 
 ## v2 Requirements
 
@@ -113,8 +113,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUAL-05 | Phase 3 | Complete |
 | QUAL-06 | Phase 3 | Complete |
 | QUAL-07 | Phase 3 | Complete |
-| DEPL-01 | Phase 4 | Pending |
-| DEPL-02 | Phase 4 | Pending |
+| DEPL-01 | Phase 4 | Complete |
+| DEPL-02 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 28 total
