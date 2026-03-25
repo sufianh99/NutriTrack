@@ -1,7 +1,10 @@
+import logging
 from datetime import date, timedelta
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from sqlalchemy import select
+
+logger = logging.getLogger("nutritrack")
 
 from app import db
 from app.calculator import (
@@ -15,6 +18,12 @@ from app.models import DailyGoal, FoodEntry, UserProfile
 from app.nutrition import progress_status, scale_nutrients, sum_daily_nutrients
 
 bp = Blueprint("main", __name__)
+
+
+@bp.route("/health")
+def health():
+    """Health check endpoint for monitoring and CI verification."""
+    return jsonify({"status": "ok"}), 200
 
 
 def _get_profile() -> UserProfile | None:
@@ -52,6 +61,13 @@ def _save_profile_and_goals(form: OnboardingForm) -> None:
     goal_row.carb_goal = macros["carbs_g"]
     db.session.merge(goal_row)
     db.session.commit()
+    logger.info(
+        "Profile saved: age=%d, weight=%.1f, height=%.1f, goal=%s",
+        form.age.data,
+        form.weight_kg.data,
+        form.height_cm.data,
+        form.goal.data,
+    )
 
 
 @bp.route("/")
@@ -207,6 +223,7 @@ def add_food():
         )
         db.session.add(entry)
         db.session.commit()
+        logger.info("Food entry added: %s, %.1fg", form.name.data, form.amount_g.data)
         flash("Lebensmittel hinzugefuegt.", "success")
         return redirect(url_for("main.dashboard"))
     return render_template("food_form.html", form=form, edit=False)
@@ -225,6 +242,7 @@ def edit_food(entry_id: int):
     if form.validate_on_submit():
         form.populate_obj(entry)
         db.session.commit()
+        logger.info("Food entry updated: id=%d, %s", entry_id, form.name.data)
         flash("Eintrag aktualisiert.", "success")
         return redirect(url_for("main.dashboard"))
     return render_template("food_form.html", form=form, edit=True, entry=entry)
@@ -236,5 +254,6 @@ def delete_food(entry_id: int):
     if entry is not None:
         db.session.delete(entry)
         db.session.commit()
+        logger.info("Food entry deleted: id=%d", entry_id)
         flash("Eintrag geloescht.", "success")
     return redirect(url_for("main.dashboard"))
