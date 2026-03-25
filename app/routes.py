@@ -1,10 +1,18 @@
 import logging
 from datetime import date, timedelta
 
-from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    Response,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from sqlalchemy import select
-
-logger = logging.getLogger("nutritrack")
+from werkzeug.wrappers import Response as WerkzeugResponse
 
 from app import db
 from app.calculator import (
@@ -17,11 +25,13 @@ from app.forms import DeleteForm, FoodEntryForm, OnboardingForm
 from app.models import DailyGoal, FoodEntry, UserProfile
 from app.nutrition import progress_status, scale_nutrients, sum_daily_nutrients
 
+logger = logging.getLogger("nutritrack")
+
 bp = Blueprint("main", __name__)
 
 
 @bp.route("/health")
-def health():
+def health() -> tuple[Response, int]:
     """Health check endpoint for monitoring and CI verification."""
     return jsonify({"status": "ok"}), 200
 
@@ -71,7 +81,7 @@ def _save_profile_and_goals(form: OnboardingForm) -> None:
 
 
 @bp.route("/")
-def index():
+def index() -> WerkzeugResponse:
     profile = _get_profile()
     if profile is None:
         return redirect(url_for("main.onboarding"))
@@ -79,7 +89,7 @@ def index():
 
 
 @bp.route("/onboarding", methods=["GET", "POST"])
-def onboarding():
+def onboarding() -> WerkzeugResponse | str:
     form = OnboardingForm()
     if form.validate_on_submit():
         _save_profile_and_goals(form)
@@ -89,7 +99,7 @@ def onboarding():
 
 
 @bp.route("/profile", methods=["GET", "POST"])
-def profile():
+def profile() -> WerkzeugResponse | str:
     profile = _get_profile()
     if profile is None:
         return redirect(url_for("main.onboarding"))
@@ -102,7 +112,7 @@ def profile():
 
 
 @bp.route("/dashboard")
-def dashboard():
+def dashboard() -> WerkzeugResponse | str:
     profile = _get_profile()
     if profile is None:
         return redirect(url_for("main.onboarding"))
@@ -169,18 +179,26 @@ def dashboard():
             "carbs_g": round(goal.carb_goal - totals["carbs_g"], 1),
         }
         percentages = {
-            "calories": round(totals["calories"] / goal.calorie_goal * 100, 1)
-            if goal.calorie_goal > 0
-            else 0.0,
-            "protein": round(totals["protein_g"] / goal.protein_goal * 100, 1)
-            if goal.protein_goal > 0
-            else 0.0,
-            "fat": round(totals["fat_g"] / goal.fat_goal * 100, 1)
-            if goal.fat_goal > 0
-            else 0.0,
-            "carbs": round(totals["carbs_g"] / goal.carb_goal * 100, 1)
-            if goal.carb_goal > 0
-            else 0.0,
+            "calories": (
+                round(totals["calories"] / goal.calorie_goal * 100, 1)
+                if goal.calorie_goal > 0
+                else 0.0
+            ),
+            "protein": (
+                round(totals["protein_g"] / goal.protein_goal * 100, 1)
+                if goal.protein_goal > 0
+                else 0.0
+            ),
+            "fat": (
+                round(totals["fat_g"] / goal.fat_goal * 100, 1)
+                if goal.fat_goal > 0
+                else 0.0
+            ),
+            "carbs": (
+                round(totals["carbs_g"] / goal.carb_goal * 100, 1)
+                if goal.carb_goal > 0
+                else 0.0
+            ),
         }
 
     prev_date = display_date - timedelta(days=1)
@@ -206,7 +224,7 @@ def dashboard():
 
 
 @bp.route("/food/add", methods=["GET", "POST"])
-def add_food():
+def add_food() -> WerkzeugResponse | str:
     profile = _get_profile()
     if profile is None:
         return redirect(url_for("main.onboarding"))
@@ -230,7 +248,7 @@ def add_food():
 
 
 @bp.route("/food/<int:entry_id>/edit", methods=["GET", "POST"])
-def edit_food(entry_id: int):
+def edit_food(entry_id: int) -> WerkzeugResponse | str:
     profile = _get_profile()
     if profile is None:
         return redirect(url_for("main.onboarding"))
@@ -249,7 +267,7 @@ def edit_food(entry_id: int):
 
 
 @bp.route("/food/<int:entry_id>/delete", methods=["POST"])
-def delete_food(entry_id: int):
+def delete_food(entry_id: int) -> WerkzeugResponse:
     entry = db.session.get(FoodEntry, entry_id)
     if entry is not None:
         db.session.delete(entry)

@@ -1,22 +1,36 @@
-import pytest
-from app.nutrition import scale_nutrients, sum_daily_nutrients, progress_status
+from app.nutrition import progress_status, scale_nutrients, sum_daily_nutrients
 
 
 class TestScaleNutrients:
     def test_150g_portion(self) -> None:
-        """150g portion of food with 200 kcal/100g, 20g protein/100g, 10g fat/100g, 30g carbs/100g."""
+        """150g portion: 200 kcal, 20g protein, 10g fat, 30g carbs per 100g."""
         result = scale_nutrients(150.0, 200.0, 20.0, 10.0, 30.0)
-        assert result == {"calories": 300.0, "protein_g": 30.0, "fat_g": 15.0, "carbs_g": 45.0}
+        assert result == {
+            "calories": 300.0,
+            "protein_g": 30.0,
+            "fat_g": 15.0,
+            "carbs_g": 45.0,
+        }
 
     def test_zero_amount(self) -> None:
         """0g portion returns all zeros."""
         result = scale_nutrients(0.0, 200.0, 20.0, 10.0, 30.0)
-        assert result == {"calories": 0.0, "protein_g": 0.0, "fat_g": 0.0, "carbs_g": 0.0}
+        assert result == {
+            "calories": 0.0,
+            "protein_g": 0.0,
+            "fat_g": 0.0,
+            "carbs_g": 0.0,
+        }
 
     def test_identity_at_100g(self) -> None:
         """100g portion returns same values as per-100g nutrients (identity)."""
         result = scale_nutrients(100.0, 200.0, 20.0, 10.0, 30.0)
-        assert result == {"calories": 200.0, "protein_g": 20.0, "fat_g": 10.0, "carbs_g": 30.0}
+        assert result == {
+            "calories": 200.0,
+            "protein_g": 20.0,
+            "fat_g": 10.0,
+            "carbs_g": 30.0,
+        }
 
 
 class TestSumDailyNutrients:
@@ -27,12 +41,22 @@ class TestSumDailyNutrients:
             {"calories": 200.0, "protein_g": 10.0, "fat_g": 5.0, "carbs_g": 25.0},
         ]
         result = sum_daily_nutrients(entries)
-        assert result == {"calories": 500.0, "protein_g": 40.0, "fat_g": 20.0, "carbs_g": 70.0}
+        assert result == {
+            "calories": 500.0,
+            "protein_g": 40.0,
+            "fat_g": 20.0,
+            "carbs_g": 70.0,
+        }
 
     def test_empty_list(self) -> None:
         """Empty list returns all zeros."""
         result = sum_daily_nutrients([])
-        assert result == {"calories": 0.0, "protein_g": 0.0, "fat_g": 0.0, "carbs_g": 0.0}
+        assert result == {
+            "calories": 0.0,
+            "protein_g": 0.0,
+            "fat_g": 0.0,
+            "carbs_g": 0.0,
+        }
 
 
 class TestProgressStatus:

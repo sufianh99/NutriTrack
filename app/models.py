@@ -6,7 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app import db
 
 
-class UserProfile(db.Model):
+class UserProfile(db.Model):  # type: ignore[name-defined]
     __tablename__ = "user_profile"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -17,7 +17,7 @@ class UserProfile(db.Model):
     goal: Mapped[str] = mapped_column(String(20), nullable=False)
 
 
-class DailyGoal(db.Model):
+class DailyGoal(db.Model):  # type: ignore[name-defined]
     __tablename__ = "daily_goal"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     date: Mapped[date] = mapped_column(Date, nullable=False, unique=True)
@@ -27,7 +27,7 @@ class DailyGoal(db.Model):
     carb_goal: Mapped[float] = mapped_column(Float, nullable=False)
 
 
-class FoodEntry(db.Model):
+class FoodEntry(db.Model):  # type: ignore[name-defined]
     __tablename__ = "food_entry"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     date: Mapped[date] = mapped_column(Date, nullable=False)
