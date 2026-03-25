@@ -1,11 +1,10 @@
 import pytest
+
 from app.calculator import (
-    calculate_bmr,
-    calculate_tdee,
     apply_goal_modifier,
+    calculate_bmr,
     calculate_macros,
-    PAL_FACTORS,
-    GOAL_MODIFIERS,
+    calculate_tdee,
 )
 
 
@@ -13,7 +12,8 @@ def test_bmr_male_reference_value() -> None:
     """30yo, 70kg, 175cm male: standard Mifflin-St-Jeor.
 
     Formula: (10 * 70) + (6.25 * 175) - (5 * 30) + 5 = 700 + 1093.75 - 150 + 5 = 1648.75
-    Note: Project spec states 1673.75 but standard Mifflin-St-Jeor formula produces 1648.75.
+    Note: Project spec states 1673.75 but standard Mifflin-St-Jeor
+    formula produces 1648.75.
     The standard formula is correct; this test uses 1648.75.
     """
     result = calculate_bmr(weight_kg=70.0, height_cm=175.0, age=30, gender="male")
@@ -33,7 +33,8 @@ def test_bmr_female_constant() -> None:
 def test_bmr_female_direct() -> None:
     """60kg, 165cm, 25yo female = 1345.25.
 
-    Formula: (10 * 60) + (6.25 * 165) - (5 * 25) - 161 = 600 + 1031.25 - 125 - 161 = 1345.25
+    Formula: (10*60) + (6.25*165) - (5*25) - 161
+    = 600 + 1031.25 - 125 - 161 = 1345.25
     """
     result = calculate_bmr(weight_kg=60.0, height_cm=165.0, age=25, gender="female")
     assert result == pytest.approx(1345.25, abs=0.01)
