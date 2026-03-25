@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Restructuring
 
-- [ ] **RSTC-01**: Existing auth system (Flask-Login, login/register routes, password hashing) is completely removed
-- [ ] **RSTC-02**: Existing models are replaced with project-spec-compliant schema (users, daily_goals, food_entries, foods_cache)
-- [ ] **RSTC-03**: App runs as single-user without any login requirement
+- [x] **RSTC-01**: Existing auth system (Flask-Login, login/register routes, password hashing) is completely removed
+- [x] **RSTC-02**: Existing models are replaced with project-spec-compliant schema (users, daily_goals, food_entries, foods_cache)
+- [x] **RSTC-03**: App runs as single-user without any login requirement
 
 ### Profile & Calculation
 
@@ -87,9 +87,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| RSTC-01 | Phase 1 | Pending |
-| RSTC-02 | Phase 1 | Pending |
-| RSTC-03 | Phase 1 | Pending |
+| RSTC-01 | Phase 1 | Complete |
+| RSTC-02 | Phase 1 | Complete |
+| RSTC-03 | Phase 1 | Complete |
 | PROF-01 | Phase 1 | Pending |
 | PROF-02 | Phase 1 | Complete |
 | PROF-03 | Phase 1 | Complete |
