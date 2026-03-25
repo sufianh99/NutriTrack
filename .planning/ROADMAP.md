@@ -26,7 +26,7 @@
   1. App starts on a fresh SQLite database without any login page, session errors, or Flask-Login import errors
   2. User is redirected to onboarding on first run and can submit age, height, weight, gender, activity level, and goal
   3. After submitting the onboarding form, user can view their calculated daily calorie goal and macro targets (protein/fat/carbs in grams)
-  4. A 30-year-old, 70 kg, 175 cm male with sedentary activity and maintain goal produces BMR = 1673.75 kcal and calorie goal = 1673.75 kcal (verified reference value)
+  4. A 30-year-old, 70 kg, 175 cm male with sedentary activity and maintain goal produces BMR = 1648.75 kcal and calorie goal = 1978.50 kcal (BMR via Mifflin-St-Jeor: 10*70 + 6.25*175 - 5*30 + 5 = 1648.75; TDEE = 1648.75 * 1.2 = 1978.50; maintain modifier = 1.0)
 **Plans:** 3 plans
 
 Plans:
