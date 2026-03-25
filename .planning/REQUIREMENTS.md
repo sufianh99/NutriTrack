@@ -29,7 +29,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **FOOD-03**: App sums all food entries for a given date into daily totals
 - [x] **FOOD-04**: User can edit an existing food entry
 - [x] **FOOD-05**: User can delete an existing food entry
-- [ ] **FOOD-06**: User can search food via Open Food Facts API and auto-fill nutrition values
+- [x] **FOOD-06**: User can search food via Open Food Facts API and auto-fill nutrition values
 - [x] **FOOD-07**: User can view food entries for past dates (history by date)
 
 ### Dashboard
@@ -101,7 +101,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOOD-03 | Phase 2 | Complete |
 | FOOD-04 | Phase 2 | Complete |
 | FOOD-05 | Phase 2 | Complete |
-| FOOD-06 | Phase 4 | Pending |
+| FOOD-06 | Phase 4 | Complete |
 | FOOD-07 | Phase 2 | Complete |
 | DASH-01 | Phase 2 | Complete |
 | DASH-02 | Phase 2 | Complete |
