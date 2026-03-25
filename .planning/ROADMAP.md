@@ -10,7 +10,7 @@
 ## Phases
 
 - [x] **Phase 1: Foundation** - Remove auth, rewrite models, implement calculator, onboarding form (completed 2026-03-25)
-- [ ] **Phase 2: Tracking Loop** - Food entry CRUD, portion scaling, dashboard with Soll/Ist comparison
+- [x] **Phase 2: Tracking Loop** - Food entry CRUD, portion scaling, dashboard with Soll/Ist comparison (completed 2026-03-25)
 - [ ] **Phase 3: Quality Gates** - CI pipeline, test suite, diagrams, health endpoint, logging
 - [ ] **Phase 4: API Integration & Deployment** - Open Food Facts search, deployment, README
 
@@ -46,12 +46,12 @@ Plans:
   3. Dashboard shows today's total calories and macros alongside the goal values (Soll/Ist), with progress bars that turn green at 90-100% and orange/red above 100%
   4. Dashboard daily summary shows remaining calories and macro percentages consumed
   5. User can navigate to a past date and view the food entries and totals for that day
-**Plans:** 1/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 02-01-PLAN.md — Nutrition module TDD (portion scaling, summation, progress status)
-- [ ] 02-02-PLAN.md — Food entry CRUD (forms, routes, food_form template)
-- [ ] 02-03-PLAN.md — Dashboard rewrite (Soll/Ist, progress bars, food log, date navigation)
+- [x] 02-02-PLAN.md — Food entry CRUD (forms, routes, food_form template)
+- [x] 02-03-PLAN.md — Dashboard rewrite (Soll/Ist, progress bars, food log, date navigation)
 
 **UI hint**: yes
 
@@ -84,7 +84,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete   | 2026-03-25 |
-| 2. Tracking Loop | 1/3 | In Progress|  |
+| 2. Tracking Loop | 3/3 | Complete   | 2026-03-25 |
 | 3. Quality Gates | 0/? | Not started | - |
 | 4. API Integration & Deployment | 0/? | Not started | - |
 
