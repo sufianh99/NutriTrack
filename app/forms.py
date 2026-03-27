@@ -1,5 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, IntegerField, PasswordField, SelectField, StringField, SubmitField
+from wtforms import (
+    FloatField,
+    IntegerField,
+    PasswordField,
+    SelectField,
+    StringField,
+    SubmitField,
+)
 from wtforms.validators import DataRequired, EqualTo, Length, NumberRange
 
 
@@ -26,7 +33,10 @@ class RegisterForm(FlaskForm):
     )
     confirm_password = PasswordField(
         "Passwort bestätigen",
-        validators=[DataRequired(), EqualTo("password", message="Passwörter stimmen nicht überein.")],
+        validators=[
+            DataRequired(),
+            EqualTo("password", message="Passwörter stimmen nicht überein."),
+        ],
     )
     submit = SubmitField("Registrieren")
 
