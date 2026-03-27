@@ -13,6 +13,7 @@
 - [x] **Phase 2: Tracking Loop** - Food entry CRUD, portion scaling, dashboard with Soll/Ist comparison (completed 2026-03-25)
 - [x] **Phase 3: Quality Gates** - CI pipeline, test suite, diagrams, health endpoint, logging (completed 2026-03-25)
 - [x] **Phase 4: API Integration & Deployment** - Open Food Facts search, deployment, README (completed 2026-03-25)
+- [ ] **Phase 5: Authentication System** - User registration/login, Flask-Login, data isolation per user
 
 ---
 
@@ -86,6 +87,26 @@ Plans:
 - [x] 04-01-PLAN.md — Open Food Facts API integration (api_client, search route, form autofill)
 - [x] 04-02-PLAN.md — Deployment configuration (Procfile, wsgi, gunicorn) and README documentation
 
+### Phase 5: Authentication System
+**Goal**: Die App wird Multi-User-fähig — Registrierung, Login/Logout, geschützte Routen, Daten-Isolation pro User
+**Depends on**: Phase 4
+**Requirements**: AUTH-01 (Register), AUTH-02 (Login/Logout), AUTH-03 (Protected Routes), AUTH-04 (Data Isolation), AUTH-05 (Tests green)
+**Success Criteria** (what must be TRUE):
+  1. Neuer Nutzer kann sich mit Username/Passwort registrieren
+  2. Login/Logout funktioniert, Session bleibt erhalten
+  3. Ohne Login → Redirect auf Login-Seite
+  4. Jeder User sieht nur seine eigenen Daten (Profil, Goals, Food Entries)
+  5. Alle Tests grün inkl. neuer Auth-Tests
+  6. CI-Pipeline grün
+**Plans:** 0/3 plans complete
+
+Plans:
+- [ ] 05-01-PLAN.md — User Model + Flask-Login Setup
+- [ ] 05-02-PLAN.md — Auth Routes + Templates (Login, Register, Logout)
+- [ ] 05-03-PLAN.md — Daten-Isolation + Auth-Tests
+
+**UI hint**: yes
+
 ---
 
 ## Progress
@@ -96,6 +117,7 @@ Plans:
 | 2. Tracking Loop | 3/3 | Complete   | 2026-03-25 |
 | 3. Quality Gates | 3/3 | Complete   | 2026-03-25 |
 | 4. API Integration & Deployment | 2/2 | Complete   | 2026-03-25 |
+| 5. Authentication System | 0/3 | Planned    | — |
 
 ---
 
