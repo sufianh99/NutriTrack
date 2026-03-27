@@ -11,7 +11,9 @@ from flask import (
     request,
     url_for,
 )
+from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy import select
+from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.wrappers import Response as WerkzeugResponse
 
 from app import db
@@ -22,13 +24,71 @@ from app.calculator import (
     calculate_macros,
     calculate_tdee,
 )
-from app.forms import DeleteForm, FoodEntryForm, OnboardingForm
-from app.models import DailyGoal, FoodEntry, UserProfile
+from app.forms import DeleteForm, FoodEntryForm, LoginForm, OnboardingForm, RegisterForm
+from app.models import DailyGoal, FoodEntry, User, UserProfile
 from app.nutrition import progress_status, scale_nutrients, sum_daily_nutrients
 
 logger = logging.getLogger("nutritrack")
 
 bp = Blueprint("main", __name__)
+
+
+# --- Auth Routes ---
+
+
+@bp.route("/register", methods=["GET", "POST"])
+def register() -> WerkzeugResponse | str:
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    form = RegisterForm()
+    if form.validate_on_submit():
+        existing = db.session.execute(
+            select(User).where(User.username == form.username.data)
+        ).scalar_one_or_none()
+        if existing:
+            flash("Benutzername bereits vergeben.", "danger")
+            return render_template("register.html", form=form)
+        user = User(
+            username=form.username.data,
+            password_hash=generate_password_hash(form.password.data),
+        )
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        logger.info("User registered: %s", user.username)
+        flash("Registrierung erfolgreich! Bitte Profil ausfuellen.", "success")
+        return redirect(url_for("main.onboarding"))
+    return render_template("register.html", form=form)
+
+
+@bp.route("/login", methods=["GET", "POST"])
+def login() -> WerkzeugResponse | str:
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = db.session.execute(
+            select(User).where(User.username == form.username.data)
+        ).scalar_one_or_none()
+        if user and check_password_hash(user.password_hash, form.password.data):
+            login_user(user)
+            logger.info("User logged in: %s", user.username)
+            next_page = request.args.get("next")
+            return redirect(next_page or url_for("main.index"))
+        flash("Benutzername oder Passwort falsch.", "danger")
+    return render_template("login.html", form=form)
+
+
+@bp.route("/logout")
+@login_required
+def logout() -> WerkzeugResponse:
+    logger.info("User logged out: %s", current_user.username)
+    logout_user()
+    flash("Erfolgreich abgemeldet.", "success")
+    return redirect(url_for("main.login"))
+
+
+# --- Health ---
 
 
 @bp.route("/health")
@@ -37,13 +97,13 @@ def health() -> tuple[Response, int]:
     return jsonify({"status": "ok"}), 200
 
 
-@bp.route("/api/food-search")
-def food_search() -> tuple[Response, int]:
-    """Search Open Food Facts for foods matching the query string.
+# --- API ---
 
-    Query param: q (str) — food name to search for.
-    Returns JSON array of product dicts, or empty array if q < 2 chars.
-    """
+
+@bp.route("/api/food-search")
+@login_required
+def food_search() -> tuple[Response, int]:
+    """Search Open Food Facts for foods matching the query string."""
     q = request.args.get("q", "")
     if len(q) < 2:
         return jsonify([]), 200
@@ -51,14 +111,23 @@ def food_search() -> tuple[Response, int]:
     return jsonify(results), 200
 
 
+# --- Helpers ---
+
+
 def _get_profile() -> UserProfile | None:
-    """Return the single-user profile (id=1) or None."""
-    return db.session.get(UserProfile, 1)
+    """Return the current user's profile or None."""
+    return db.session.execute(
+        select(UserProfile).where(UserProfile.user_id == current_user.id)
+    ).scalar_one_or_none()
 
 
 def _save_profile_and_goals(form: OnboardingForm) -> None:
-    """Create/update UserProfile and upsert today's DailyGoal."""
-    profile = db.session.get(UserProfile, 1) or UserProfile(id=1)
+    """Create/update UserProfile and upsert today's DailyGoal for current user."""
+    profile = db.session.execute(
+        select(UserProfile).where(UserProfile.user_id == current_user.id)
+    ).scalar_one_or_none()
+    if profile is None:
+        profile = UserProfile(user_id=current_user.id)
     profile.age = form.age.data
     profile.height_cm = form.height_cm.data
     profile.weight_kg = form.weight_kg.data
@@ -76,10 +145,12 @@ def _save_profile_and_goals(form: OnboardingForm) -> None:
 
     today = date.today()
     goal_row = db.session.execute(
-        select(DailyGoal).where(DailyGoal.date == today)
+        select(DailyGoal).where(
+            DailyGoal.user_id == current_user.id, DailyGoal.date == today
+        )
     ).scalar_one_or_none()
     if goal_row is None:
-        goal_row = DailyGoal(date=today)
+        goal_row = DailyGoal(date=today, user_id=current_user.id)
     goal_row.calorie_goal = round(calorie_goal, 2)
     goal_row.protein_goal = macros["protein_g"]
     goal_row.fat_goal = macros["fat_g"]
@@ -87,7 +158,8 @@ def _save_profile_and_goals(form: OnboardingForm) -> None:
     db.session.merge(goal_row)
     db.session.commit()
     logger.info(
-        "Profile saved: age=%d, weight=%.1f, height=%.1f, goal=%s",
+        "Profile saved: user=%s, age=%d, weight=%.1f, height=%.1f, goal=%s",
+        current_user.username,
         form.age.data,
         form.weight_kg.data,
         form.height_cm.data,
@@ -95,7 +167,11 @@ def _save_profile_and_goals(form: OnboardingForm) -> None:
     )
 
 
+# --- App Routes ---
+
+
 @bp.route("/")
+@login_required
 def index() -> WerkzeugResponse:
     profile = _get_profile()
     if profile is None:
@@ -104,6 +180,7 @@ def index() -> WerkzeugResponse:
 
 
 @bp.route("/onboarding", methods=["GET", "POST"])
+@login_required
 def onboarding() -> WerkzeugResponse | str:
     form = OnboardingForm()
     if form.validate_on_submit():
@@ -114,6 +191,7 @@ def onboarding() -> WerkzeugResponse | str:
 
 
 @bp.route("/profile", methods=["GET", "POST"])
+@login_required
 def profile() -> WerkzeugResponse | str:
     profile = _get_profile()
     if profile is None:
@@ -127,12 +205,12 @@ def profile() -> WerkzeugResponse | str:
 
 
 @bp.route("/dashboard")
+@login_required
 def dashboard() -> WerkzeugResponse | str:
     profile = _get_profile()
     if profile is None:
         return redirect(url_for("main.onboarding"))
 
-    # Resolve display date from ?date= query param or default to today
     date_str = request.args.get("date")
     try:
         display_date = date.fromisoformat(date_str) if date_str else date.today()
@@ -141,23 +219,25 @@ def dashboard() -> WerkzeugResponse | str:
 
     today = date.today()
 
-    # Always use today's goal for Soll values (goals don't retroactively change)
     goal = db.session.execute(
-        select(DailyGoal).where(DailyGoal.date == today)
+        select(DailyGoal).where(
+            DailyGoal.user_id == current_user.id, DailyGoal.date == today
+        )
     ).scalar_one_or_none()
 
-    # Fetch food entries for the displayed date
     entries = (
         db.session.execute(
             select(FoodEntry)
-            .where(FoodEntry.date == display_date)
+            .where(
+                FoodEntry.user_id == current_user.id,
+                FoodEntry.date == display_date,
+            )
             .order_by(FoodEntry.id)
         )
         .scalars()
         .all()
     )
 
-    # Scale each entry and compute daily totals
     scaled = [
         scale_nutrients(
             e.amount_g,
@@ -170,10 +250,8 @@ def dashboard() -> WerkzeugResponse | str:
     ]
     totals = sum_daily_nutrients(scaled)
 
-    # Build merged entry_rows for template (avoids zip in Jinja2)
     entry_rows = [{"entry": e, "scaled": s} for e, s in zip(entries, scaled)]
 
-    # Compute progress statuses for colour coding
     statuses: dict[str, str] = {}
     if goal:
         statuses = {
@@ -183,7 +261,6 @@ def dashboard() -> WerkzeugResponse | str:
             "carbs": progress_status(totals["carbs_g"], goal.carb_goal),
         }
 
-    # Compute remaining and percentages for DASH-03
     remaining: dict[str, float] = {}
     percentages: dict[str, float] = {}
     if goal:
@@ -239,6 +316,7 @@ def dashboard() -> WerkzeugResponse | str:
 
 
 @bp.route("/food/add", methods=["GET", "POST"])
+@login_required
 def add_food() -> WerkzeugResponse | str:
     profile = _get_profile()
     if profile is None:
@@ -246,6 +324,7 @@ def add_food() -> WerkzeugResponse | str:
     form = FoodEntryForm()
     if form.validate_on_submit():
         entry = FoodEntry(
+            user_id=current_user.id,
             date=date.today(),
             name=form.name.data,
             amount_g=form.amount_g.data,
@@ -263,11 +342,16 @@ def add_food() -> WerkzeugResponse | str:
 
 
 @bp.route("/food/<int:entry_id>/edit", methods=["GET", "POST"])
+@login_required
 def edit_food(entry_id: int) -> WerkzeugResponse | str:
     profile = _get_profile()
     if profile is None:
         return redirect(url_for("main.onboarding"))
-    entry = db.session.get(FoodEntry, entry_id)
+    entry = db.session.execute(
+        select(FoodEntry).where(
+            FoodEntry.id == entry_id, FoodEntry.user_id == current_user.id
+        )
+    ).scalar_one_or_none()
     if entry is None:
         flash("Eintrag nicht gefunden.", "warning")
         return redirect(url_for("main.dashboard"))
@@ -282,8 +366,13 @@ def edit_food(entry_id: int) -> WerkzeugResponse | str:
 
 
 @bp.route("/food/<int:entry_id>/delete", methods=["POST"])
+@login_required
 def delete_food(entry_id: int) -> WerkzeugResponse:
-    entry = db.session.get(FoodEntry, entry_id)
+    entry = db.session.execute(
+        select(FoodEntry).where(
+            FoodEntry.id == entry_id, FoodEntry.user_id == current_user.id
+        )
+    ).scalar_one_or_none()
     if entry is not None:
         db.session.delete(entry)
         db.session.commit()
