@@ -86,52 +86,121 @@ def test_search_food_returns_empty_on_exception():
         assert results == []
 
 
-def test_search_food_missing_nutriments_default_to_zero():
-    """Test 4: Missing nutriments keys default to 0.0 (not KeyError)."""
+def test_search_food_filters_out_empty_nutriments():
+    """Test 4: Products with empty nutriments (0 kcal + 0 protein) are filtered out."""
     with patch("app.api_client.requests.get") as mock_get:
         mock_get.return_value = _mock_response(
             {
                 "products": [
                     {
-                        "product_name": "Unbekanntes Produkt",
+                        "product_name": "Leeres Produkt",
                         "nutriments": {},
-                    }
+                    },
+                    {
+                        "product_name": "Gutes Produkt",
+                        "nutriments": {"energy-kcal_100g": 200, "proteins_100g": 10},
+                    },
                 ]
             }
         )
 
         from app.api_client import search_food
 
-        results = search_food("Unbekanntes Produkt")
+        results = search_food("Produkt")
         assert len(results) == 1
-        assert results[0]["calories_per_100g"] == 0.0
-        assert results[0]["protein_per_100g"] == 0.0
-        assert results[0]["fat_per_100g"] == 0.0
-        assert results[0]["carbs_per_100g"] == 0.0
+        assert results[0]["name"] == "Gutes Produkt"
 
 
 def test_search_food_limits_results_to_max():
-    """Test 5: search_food passes max_results as page_size to API."""
+    """Test 5: search_food limits returned results to max_results."""
     with patch("app.api_client.requests.get") as mock_get:
         products = [
             {
                 "product_name": f"Produkt {i}",
-                "nutriments": {"energy-kcal_100g": 100 * i},
+                "nutriments": {"energy-kcal_100g": 100 + i, "proteins_100g": 5},
             }
-            for i in range(15)
+            for i in range(30)
         ]
         mock_get.return_value = _mock_response({"products": products})
 
         from app.api_client import search_food
 
-        results = search_food("Produkt")
-        # API returns all 15 but page_size=10 was requested
-        assert len(results) == 15  # we trust the API to limit; client parses all
+        results = search_food("Produkt", max_results=5)
+        assert len(results) == 5
 
-        # With explicit max_results, page_size is set accordingly
-        results_5 = search_food("Produkt", max_results=5)
-        call_args = mock_get.call_args
-        assert call_args[1]["params"]["page_size"] == 5
+
+def test_search_food_deduplicates_by_name():
+    """Test 6: Duplicate product names are deduplicated (first wins)."""
+    with patch("app.api_client.requests.get") as mock_get:
+        mock_get.return_value = _mock_response(
+            {
+                "products": [
+                    {
+                        "product_name": "Haferflocken",
+                        "nutriments": {"energy-kcal_100g": 372, "proteins_100g": 13},
+                    },
+                    {
+                        "product_name": "Haferflocken",
+                        "nutriments": {"energy-kcal_100g": 369, "proteins_100g": 12},
+                    },
+                ]
+            }
+        )
+
+        from app.api_client import search_food
+
+        results = search_food("Haferflocken")
+        assert len(results) == 1
+        assert results[0]["calories_per_100g"] == 372.0
+
+
+def test_search_food_includes_brand_in_name():
+    """Test 7: Brand is appended to product name for disambiguation."""
+    with patch("app.api_client.requests.get") as mock_get:
+        mock_get.return_value = _mock_response(
+            {
+                "products": [
+                    {
+                        "product_name": "Haferflocken",
+                        "brands": "Alnatura",
+                        "nutriments": {"energy-kcal_100g": 371, "proteins_100g": 13},
+                    },
+                ]
+            }
+        )
+
+        from app.api_client import search_food
+
+        results = search_food("Haferflocken")
+        assert len(results) == 1
+        assert results[0]["name"] == "Haferflocken (Alnatura)"
+
+
+def test_search_food_rounds_float_values():
+    """Test 8: Floating point values are rounded to 1 decimal."""
+    with patch("app.api_client.requests.get") as mock_get:
+        mock_get.return_value = _mock_response(
+            {
+                "products": [
+                    {
+                        "product_name": "Milch",
+                        "nutriments": {
+                            "energy-kcal_100g": 47.00000001,
+                            "proteins_100g": 3.2000000476837,
+                            "fat_100g": 1.5,
+                            "carbohydrates_100g": 4.80000019073486,
+                        },
+                    },
+                ]
+            }
+        )
+
+        from app.api_client import search_food
+
+        results = search_food("Milch")
+        assert results[0]["calories_per_100g"] == 47.0
+        assert results[0]["protein_per_100g"] == 3.2
+        assert results[0]["carbs_per_100g"] == 4.8
 
 
 def test_search_food_fallback_to_second_url():
