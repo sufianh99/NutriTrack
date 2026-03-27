@@ -1,12 +1,34 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, IntegerField, SelectField, StringField, SubmitField
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms import FloatField, IntegerField, PasswordField, SelectField, StringField, SubmitField
+from wtforms.validators import DataRequired, EqualTo, Length, NumberRange
 
 
 class DeleteForm(FlaskForm):
     """Empty form used solely for CSRF token on delete actions."""
 
     pass
+
+
+class LoginForm(FlaskForm):
+    username = StringField(
+        "Benutzername", validators=[DataRequired(), Length(min=3, max=80)]
+    )
+    password = PasswordField("Passwort", validators=[DataRequired()])
+    submit = SubmitField("Einloggen")
+
+
+class RegisterForm(FlaskForm):
+    username = StringField(
+        "Benutzername", validators=[DataRequired(), Length(min=3, max=80)]
+    )
+    password = PasswordField(
+        "Passwort", validators=[DataRequired(), Length(min=6, max=128)]
+    )
+    confirm_password = PasswordField(
+        "Passwort bestätigen",
+        validators=[DataRequired(), EqualTo("password", message="Passwörter stimmen nicht überein.")],
+    )
+    submit = SubmitField("Registrieren")
 
 
 class OnboardingForm(FlaskForm):
