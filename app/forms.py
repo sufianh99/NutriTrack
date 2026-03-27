@@ -32,10 +32,10 @@ class RegisterForm(FlaskForm):
         "Passwort", validators=[DataRequired(), Length(min=6, max=128)]
     )
     confirm_password = PasswordField(
-        "Passwort bestätigen",
+        "Passwort bestaetigen",
         validators=[
             DataRequired(),
-            EqualTo("password", message="Passwörter stimmen nicht überein."),
+            EqualTo("password", message="Passwoerter stimmen nicht ueberein."),
         ],
     )
     submit = SubmitField("Registrieren")
@@ -46,24 +46,24 @@ class OnboardingForm(FlaskForm):
         "Alter", validators=[DataRequired(), NumberRange(min=10, max=120)]
     )
     height_cm = FloatField(
-        "Größe (cm)", validators=[DataRequired(), NumberRange(min=100, max=250)]
+        "Groesse (cm)", validators=[DataRequired(), NumberRange(min=100, max=250)]
     )
     weight_kg = FloatField(
         "Gewicht (kg)", validators=[DataRequired(), NumberRange(min=20, max=300)]
     )
     gender = SelectField(
         "Geschlecht",
-        choices=[("male", "Männlich"), ("female", "Weiblich")],
+        choices=[("male", "Maennlich"), ("female", "Weiblich")],
         validators=[DataRequired()],
     )
     activity_level = SelectField(
-        "Aktivitätslevel",
+        "Aktivitaetslevel",
         choices=[
             ("sedentary", "Sitzend (wenig Bewegung)"),
             ("light", "Leicht aktiv (1-3x/Woche Sport)"),
-            ("moderate", "Mäßig aktiv (3-5x/Woche Sport)"),
+            ("moderate", "Maessig aktiv (3-5x/Woche Sport)"),
             ("active", "Sehr aktiv (6-7x/Woche Sport)"),
-            ("very_active", "Extrem aktiv (körperliche Arbeit)"),
+            ("very_active", "Extrem aktiv (koerperliche Arbeit)"),
         ],
         validators=[DataRequired()],
     )
