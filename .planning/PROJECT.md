@@ -43,7 +43,7 @@ Nutzer können ihren individuellen Tagesbedarf berechnen und ihre tatsächliche 
 
 ### Out of Scope
 
-- Benutzer-Login / Registrierung — Projektvorgabe: Won't Have, Single-User-App
+- ~~Benutzer-Login / Registrierung~~ — Moved to Active: Phase 5
 - Mobile App — Won't Have, Web-only
 - Barcode-Scanner — Won't Have, zu aufwändig
 - Social Features / Chatbot — Won't Have, nicht im Scope
@@ -65,7 +65,7 @@ Nutzer können ihren individuellen Tagesbedarf berechnen und ihre tatsächliche 
 - **CI/CD**: GitHub Actions — Pflichtbestandteil der Abgabe
 - **Diagramme**: Klassendiagramm + Sequenzdiagramm CI/CD — Pflicht-Nachweis
 - **Tests**: Mindestens 5 Unit Tests + Integrationstests — Pflicht
-- **Single User**: Kein Auth, ein Nutzerprofil via Onboarding
+- **Multi User**: Login/Registrierung mit Flask-Login, jeder Nutzer hat eigenes Profil und Tracking-Daten
 
 ## Key Decisions
 
