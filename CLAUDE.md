@@ -14,7 +14,7 @@ Eine webbasierte Ernährungs-Tracking-Anwendung, die Nutzern hilft, ihren tägli
 - **CI/CD**: GitHub Actions — Pflichtbestandteil der Abgabe
 - **Diagramme**: Klassendiagramm + Sequenzdiagramm CI/CD — Pflicht-Nachweis
 - **Tests**: Mindestens 5 Unit Tests + Integrationstests — Pflicht
-- **Single User**: Kein Auth, ein Nutzerprofil via Onboarding
+- **Multi User**: Login/Registrierung mit Flask-Login, jeder Nutzer hat eigenes Profil und Tracking-Daten
 <!-- GSD:project-end -->
 
 <!-- GSD:stack-start source:research/STACK.md -->
