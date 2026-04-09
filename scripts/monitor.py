@@ -58,25 +58,25 @@ def check_health() -> dict[str, object]:
 
 
 def main() -> None:
-    print(f"NutriTrack Monitoring")
+    print("NutriTrack Monitoring")
     print(f"URL: {HEALTH_ENDPOINT}")
     print("-" * 40)
 
     result = check_health()
 
     if result["status"] == "ok":
-        print(f"Status:       OK")
+        print("Status:       OK")
         print(f"HTTP Code:    {result['http_code']}")
         print(f"Antwortzeit:  {result['response_time_ms']} ms")
         print(f"Response:     {result['body']}")
         sys.exit(0)
     elif result["status"] == "unreachable":
-        print(f"Status:       NICHT ERREICHBAR")
+        print("Status:       NICHT ERREICHBAR")
         print(f"Versuche:     {result['attempt']}/{MAX_RETRIES}")
         print("Die Anwendung antwortet nicht.")
         sys.exit(1)
     else:
-        print(f"Status:       FEHLER")
+        print("Status:       FEHLER")
         print(f"HTTP Code:    {result['http_code']}")
         print(f"Antwortzeit:  {result['response_time_ms']} ms")
         sys.exit(1)
