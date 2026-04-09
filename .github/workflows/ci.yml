@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -34,3 +34,39 @@ jobs:
 
       - name: Test (pytest)
         run: pytest tests/ -v --tb=short
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: quality
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Deploy to Render
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" \
+            -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" | \
+          grep -q "200" && echo "Deploy triggered" || echo "Deploy skipped (no hook configured)"
+
+  monitor:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Health check
+        run: python scripts/monitor.py
+        env:
+          NUTRITRACK_URL: ${{ secrets.NUTRITRACK_PROD_URL }}

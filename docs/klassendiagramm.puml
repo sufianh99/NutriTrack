@@ -1,0 +1,61 @@
+@startuml NutriTrack Klassendiagramm
+
+skinparam classAttributeIconSize 0
+skinparam style strictuml
+
+title NutriTrack – Klassendiagramm
+
+class Benutzer {
+    + benutzername : String
+    + passwort : String
+    --
+    + registrieren()
+    + einloggen()
+    + ausloggen()
+}
+
+class Benutzerprofil {
+    + alter : int
+    + groesse_cm : float
+    + gewicht_kg : float
+    + geschlecht : String
+    + aktivitaetslevel : String
+    + ziel : String
+    --
+    + speichern()
+    + aktualisieren()
+    + bedarfBerechnen() : Tagesziel
+}
+
+class Tagesziel {
+    + datum : Date
+    + kalorienziel : float
+    + proteinziel : float
+    + fettziel : float
+    + kohlenhydratziel : float
+    --
+    + fortschrittBerechnen(ist: float) : String
+}
+
+class Nahrungseintrag {
+    + datum : Date
+    + name : String
+    + menge_g : float
+    + kalorien_pro_100g : float
+    + protein_pro_100g : float
+    + fett_pro_100g : float
+    + kohlenhydrate_pro_100g : float
+    --
+    + hinzufuegen()
+    + bearbeiten()
+    + loeschen()
+    + naehrwerteBerechnen() : dict
+}
+
+Benutzer "1" -- "0..1" Benutzerprofil : hat >
+Benutzer "1" -- "*"    Tagesziel      : hat >
+Benutzer "1" -- "*"    Nahrungseintrag : erfasst >
+
+Benutzerprofil "1" -- "1" Tagesziel : berechnet >
+
+@enduml
