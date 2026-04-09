@@ -1,11 +1,8 @@
-from datetime import date
-
 from flask import Flask
-from flask.testing import FlaskClient
 from sqlalchemy import select
 
 from app import db
-from app.models import DailyGoal, FoodEntry, UserProfile
+from app.models import FoodEntry, UserProfile
 
 VALID_PROFILE = {
     "age": "30",
