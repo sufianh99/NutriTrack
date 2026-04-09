@@ -78,9 +78,7 @@ def search_food(query: str, max_results: int = 10) -> list[dict[str, float | str
 
 def _extract_name(product: dict) -> str:
     """Build a display name from product data, including brand if available."""
-    name: str = product.get("product_name") or product.get(
-        "product_name_de", ""
-    )
+    name: str = product.get("product_name") or product.get("product_name_de", "")
     if not name:
         return "Unknown"
 

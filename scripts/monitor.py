@@ -49,7 +49,12 @@ def check_health() -> dict[str, object]:
         if attempt < MAX_RETRIES:
             time.sleep(RETRY_DELAY)
 
-    return {"status": "unreachable", "http_code": 0, "response_time_ms": 0, "attempt": MAX_RETRIES}
+    return {
+        "status": "unreachable",
+        "http_code": 0,
+        "response_time_ms": 0,
+        "attempt": MAX_RETRIES,
+    }
 
 
 def main() -> None:
