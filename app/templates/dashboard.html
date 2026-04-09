@@ -11,7 +11,7 @@
   </h4>
   <a href="{{ url_for('main.dashboard', date=next_date) }}"
      class="btn btn-outline-secondary btn-sm {% if display_date >= today %}disabled{% endif %}">
-    Naechster Tag &raquo;
+    Nächster Tag &raquo;
   </a>
 </div>
 
@@ -122,14 +122,14 @@
 </div>
 {% else %}
 <div class="alert alert-info">
-  Keine Ziele fuer heute berechnet. <a href="{{ url_for('main.profile') }}">Profil aktualisieren</a>.
+  Keine Ziele für heute berechnet. <a href="{{ url_for('main.profile') }}">Profil aktualisieren</a>.
 </div>
 {% endif %}
 
 {# === Food Log (inline list of entries) === #}
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <strong>Eintraege</strong>
+    <strong>Einträge</strong>
     {% if display_date == today %}
     <a href="{{ url_for('main.add_food') }}" class="btn btn-success btn-sm">+ Lebensmittel</a>
     {% endif %}
@@ -169,7 +169,7 @@
                     class="d-inline">
                 {{ delete_form.hidden_tag() }}
                 <button type="submit" class="btn btn-sm btn-outline-danger"
-                        onclick="return confirm('Eintrag loeschen?')">Loeschen</button>
+                        onclick="return confirm('Eintrag löschen?')">Löschen</button>
               </form>
             </td>
             {% endif %}
@@ -179,7 +179,7 @@
       </table>
     </div>
     {% else %}
-    <p class="text-muted mb-0">Noch keine Eintraege fuer diesen Tag.</p>
+    <p class="text-muted mb-0">Noch keine Einträge für diesen Tag.</p>
     {% endif %}
   </div>
 </div>

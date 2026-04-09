@@ -1,7 +1,7 @@
-"""Monitoring-Skript fuer die NutriTrack Produktionsumgebung.
+"""Monitoring-Skript für die NutriTrack Produktionsumgebung.
 
-Prueft den Health-Endpoint und gibt strukturierte Statusinformationen aus.
-Kann manuell oder automatisiert (CI/CD, Cron) ausgefuehrt werden.
+Prüft den Health-Endpoint und gibt strukturierte Statusinformationen aus.
+Kann manuell oder automatisiert (CI/CD, Cron) ausgeführt werden.
 
 Verwendung:
     # Mit Umgebungsvariable:
@@ -25,7 +25,7 @@ RETRY_DELAY = 5
 
 
 def check_health() -> dict[str, object]:
-    """Prueft den Health-Endpoint und gibt Statusinformationen zurueck."""
+    """Prüft den Health-Endpoint und gibt Statusinformationen zurück."""
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             start = time.time()

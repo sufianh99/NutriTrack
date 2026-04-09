@@ -56,7 +56,7 @@ def register() -> WerkzeugResponse | str:
         db.session.commit()
         login_user(user)
         logger.info("User registered: %s", user.username)
-        flash("Registrierung erfolgreich! Bitte Profil ausfuellen.", "success")
+        flash("Registrierung erfolgreich! Bitte Profil ausfüllen.", "success")
         return redirect(url_for("main.onboarding"))
     return render_template("register.html", form=form)
 
@@ -336,7 +336,7 @@ def add_food() -> WerkzeugResponse | str:
         db.session.add(entry)
         db.session.commit()
         logger.info("Food entry added: %s, %.1fg", form.name.data, form.amount_g.data)
-        flash("Lebensmittel hinzugefuegt.", "success")
+        flash("Lebensmittel hinzugefügt.", "success")
         return redirect(url_for("main.dashboard"))
     return render_template("food_form.html", form=form, edit=False)
 
@@ -377,5 +377,5 @@ def delete_food(entry_id: int) -> WerkzeugResponse:
         db.session.delete(entry)
         db.session.commit()
         logger.info("Food entry deleted: id=%d", entry_id)
-        flash("Eintrag geloescht.", "success")
+        flash("Eintrag gelöscht.", "success")
     return redirect(url_for("main.dashboard"))
